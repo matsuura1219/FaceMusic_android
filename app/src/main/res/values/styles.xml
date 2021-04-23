@@ -1,0 +1,12 @@
+<resources>
+    <!-- Base application theme. -->
+    <!--ステータスバーのみ表示する-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <!--ステータスバーの色に適用される属性はcolorPrimaryDarkのためここを表示したい色に変更します-->
+        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>

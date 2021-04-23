@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--デフォルト-->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <!--カスタム-->
+<!--    <color name="primary">#152662</color>-->
+    <color name="primary">#F0EEEF</color>
+    <color name="secondary">#262E77</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#242424</color>
+
+
+
+
+    <!--オーバーレイ表示-->
+    <color name="overlay">#66ffffff</color>
+
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--ボタンに丸みをつけるためのファイルです-->
+<!--高さ / 2 の半径をつけます-->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                android:topRightRadius="@dimen/button_radius"
+                android:bottomRightRadius="@dimen/button_radius"
+                android:bottomLeftRadius="@dimen/button_radius"
+                android:topLeftRadius="@dimen/button_radius" />
+            <solid
+                android:color="@color/button_material_light" />
+        </shape>
+    </item>
+</selector>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CameraActivity"
+    android:background="@color/primary"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--タイトルバー-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/titlebar_height"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/padding">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!--タイトルバーの文字--><TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/titlebar_height"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:text="@string/title_camera_activity"
+                        android:textSize="@dimen/titlebar_font_size"/>
+
+                    <!--戻る矢印-->
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/arrows_v3"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--STEP01-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.8"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/selfie_v2"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.3">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step1"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:background="@drawable/text_rounded_corners"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="20dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step1_title"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step1_explanation"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"/>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <!--STEP03-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="32dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.8"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/ai_v2"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.3">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step2"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:background="@drawable/text_rounded_corners"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="20dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step2_title"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step2_explanation"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!--step03-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="32dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.8"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/music_v2"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="0.3">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step3"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:background="@drawable/text_rounded_corners"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="20dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step3_title"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/step3_explanation"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding"
+                android:paddingBottom="@dimen/padding"
+                android:orientation="vertical"
+                android:gravity="center|bottom">
+
+                <!--カメラを起動するボタン-->
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="NEXT"
+                    android:textSize="@dimen/button_text_size"
+                    android:background="@drawable/shape_rounded_corners"
+                    android:foreground="?android:selectableItemBackground"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/overlay"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <ProgressBar
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@android:style/Widget.ProgressBar"/>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

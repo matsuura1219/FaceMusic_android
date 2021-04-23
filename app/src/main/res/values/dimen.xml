@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--前画面の左右padding-->
+    <dimen name="padding">16dp</dimen>
+
+    <!--タイトルバーの高さ-->
+    <dimen name="titlebar_height">56dp</dimen>
+
+    <!--cardViewの角丸の半径-->
+    <dimen name="cardview_radius">4dp</dimen>
+
+    <!--cardViewの高さ-->
+    <dimen name="cardview_height">200dp</dimen>
+
+    <!--タイトルバーの文字サイズ-->
+    <dimen name="titlebar_font_size">20sp</dimen>
+
+    <!--cardViewのz軸-->
+    <dimen name="cardview_z">1dp</dimen>
+
+    <!--ボタンの文字サイズ-->
+    <dimen name="button_text_size">20sp</dimen>
+
+    <!--ボタンの高さ-->
+    <dimen name="button_height">60dp</dimen>
+
+    <!--ボタンの角丸の半径-->
+    <dimen name="button_radius">30dp</dimen>
+
+    <!--FaceAPIの詳細画面の文字サイズ-->
+    <dimen name="list_text_size">16sp</dimen>
+
+    <!--subtitleの文字サイズ-->
+    <dimen name="subtitle">16sp</dimen>
+
+    <!--サブタイトルとViewのマージン-->
+    <dimen name="margin_between_subtitle_and_view">8dp</dimen>
+
+    <!--ViewとViewのマージン-->
+    <dimen name="margin_between_view_and_view">16dp</dimen>
+
+</resources>

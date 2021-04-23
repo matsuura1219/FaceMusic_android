@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">FaceMusic</string>
+
+    <string name="title_home_activity">"FACE MUSIC</string>
+    <!--タイトル(CameraActivity)-->
+    <string name="title_camera_activity">アプリの説明</string>
+    <!--タイトル(ShowResultForFaceApiActivity)-->
+    <string name="title_show_result_for_face_api_activity">画像処理の結果</string>
+    <!--タイトル(ShowMusicActivity)-->
+    <string name="title_show_music_activity">提案された楽曲一覧</string>
+    <!--タイトル(PlayMusicActivity)-->
+    <string name="title_play_music_activity">楽曲再生</string>
+
+    <!--STEP(CameraActivity)-->
+    <string name="step1"><i>STEP01</i></string>
+    <string name="step2"><i>STEP02</i></string>
+    <string name="step3"><i>STEP03</i></string>
+
+    <string name="step1_title">顔写真の撮影</string>
+    <string name="step1_explanation">NEXTボタンを押下すると、カメラが起動します。今の感情を表情にだし、撮影してください。</string>
+
+    <string name="step2_title">感情の推論</string>
+    <string name="step2_explanation">撮影画像を送信すると、AIにより、感情を取得します。</string>
+
+    <string name="step3_title">最適な楽曲の提案</string>
+    <string name="step3_explanation">取得した感情から、最適な楽曲を提案し、音楽の視聴ができます。</string>
+
+
+</resources>
