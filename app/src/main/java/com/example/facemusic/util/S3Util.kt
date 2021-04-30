@@ -1,8 +1,6 @@
 package com.example.facemusic.util
 
-import android.R.attr.path
 import android.content.Context
-import android.util.Log
 import com.amazonaws.AmazonClientException
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.HttpMethod
@@ -20,15 +18,13 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.example.facemusic.`interface`.UpLoadObjectListener
 import com.example.facemusic.const.Exconst
-import kotlinx.coroutines.*
 import java.io.File
-import java.net.URL
 import java.util.*
 
 
 /** Amazon S3に画像をアップロードするクラスです **/
 
-class UploadObject : TransferListener {
+class S3Util : TransferListener {
 
     /** 変数 **/
     private var _listener: UpLoadObjectListener? = null
@@ -48,8 +44,8 @@ class UploadObject : TransferListener {
     //static領域（シングルトン）
     companion object {
 
-        private val _instance: UploadObject = UploadObject()
-        fun getInstance(): UploadObject = _instance
+        private val _instance: S3Util = S3Util()
+        fun getInstance(): S3Util = _instance
 
     }
 

@@ -1,8 +1,6 @@
 package com.example.facemusic.util
 
-import android.util.Log
 import com.example.facemusic.`interface`.FaceApiListener
-import com.example.facemusic.const.Exconst
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
@@ -11,7 +9,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 /** サーバ通信を行うためのクラスです **/
 
-class AppServerCom {
+class FaceApiUtil {
 
     /** 変数（Face API） **/
 
@@ -36,10 +34,10 @@ class AppServerCom {
     // static領域
     companion object {
         // シングルトンインスタンスの宣言
-        private var instance: AppServerCom = AppServerCom()
+        private var instance: FaceApiUtil = FaceApiUtil()
 
         // インスタンス取得
-        fun getInstance(): AppServerCom {
+        fun getInstance(): FaceApiUtil {
             return instance
         }
 

@@ -5,7 +5,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.example.facemusic.util.DialogUtil
+import com.example.facemusic.`interface`.SpotifyListener
+import com.example.facemusic.const.Exconst
+import com.example.facemusic.util.SpotifyApiUtil
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -27,4 +29,31 @@ class HomeActivity : Activity() {
         }
     }
 
+    /*
+    override fun onStart() {
+        super.onStart()
+
+        //Spotifyアプリと接続をします
+        //SpotifyApiUtil.getInstance().connectToSpotifyApp(this, this)
+    }
+    */
+
+
+    /** Spotifyとの認証が完了した時に実行されるコールバック関数です */
+    /*
+    override fun onAuthenticationResponse(resultCode: String) {
+
+        if (resultCode.equals(Exconst.AUTHENTICATION_COMPLETE)) {
+            //認証に成功したとき
+            Log.d("debug", "OK")
+
+            //SpotifyApiUtil.getInstance().playMusic("spotify:track:7dH0dpi751EoguDDg3xx6J")
+
+        } else {
+            //認証に失敗したとき
+
+        }
+    }
+
+    */
 }

@@ -6,19 +6,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.facemusic.`interface`.FaceApiListener
 import com.example.facemusic.`interface`.UpLoadObjectListener
 import com.example.facemusic.const.Exconst
-import com.example.facemusic.util.AppServerCom
+import com.example.facemusic.util.FaceApiUtil
 import com.example.facemusic.util.CommonUtil
-import com.example.facemusic.util.UploadObject
+import com.example.facemusic.util.S3Util
 import kotlinx.android.synthetic.main.activity_camera.*
 import kotlinx.coroutines.*
 import org.json.JSONArray
@@ -146,7 +144,7 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
 
                 //Amazon S3 に画像を保存します
                 //[!!]は強制アンラップを行います
-                UploadObject.getInstance().uploadImage(this, CommonUtil.createUploadFile(this, img, "face-img")!!, fileName,this)
+                S3Util.getInstance().uploadImage(this, CommonUtil.createUploadFile(this, img, "face-img")!!, fileName,this)
 
 
             }
@@ -163,7 +161,7 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
     override fun onSuccess(errorCode: String, data: String?) {
 
         //アップロードした画像を削除します
-        UploadObject.getInstance().deleteObject(fileName)
+        S3Util.getInstance().deleteObject(fileName)
 
         //メインスレッドで描画処理を行います
         val coroutine = CoroutineScope(Dispatchers.Main)
@@ -410,9 +408,9 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
             cor.launch {
 
                 //URLを生成します
-                var url = UploadObject.getInstance().createObjectUrl(fileName)
+                var url = S3Util.getInstance().createObjectUrl(fileName)
                 //FaceAPIをコールします
-                AppServerCom.getInstance().sendImageToMicroSoft(url,this@CameraActivity)
+                FaceApiUtil.getInstance().sendImageToMicroSoft(url,this@CameraActivity)
             }
 
         } else {
