@@ -1,5 +1,8 @@
 package com.example.facemusic.util
 
+import android.util.Log
+import com.example.facemusic.`interface`.EC2ServerListener
+import com.example.facemusic.const.Exconst
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -11,7 +14,7 @@ import java.io.IOException
 class EC2ServerComm {
 
     /** 定数 **/
-    private val EMOTION_URL = ""
+    private val EMOTION_URL = "http://18.179.205.80:8080/FaceMusic-Server/EmotionsApi"
 
     /** 変数 **/
 
@@ -22,7 +25,7 @@ class EC2ServerComm {
     }
 
     /** 感情データを送信し、最適な楽曲を取得する関数です (GET) **/
-    fun getMusicForEmtions (anger: Float, contempt: Float, disgust: Float, fear: Float, happiness: Float, neutral: Float, sadness: Float, surprise: Float) {
+    fun getMusicForEmtions (anger: Float, contempt: Float, disgust: Float, fear: Float, happiness: Float, neutral: Float, sadness: Float, surprise: Float, listener: EC2ServerListener) {
 
         //インスタンス化
         val client = OkHttpClient()
@@ -32,17 +35,37 @@ class EC2ServerComm {
 
         val request: Request = Request.Builder().url(url).build()
 
-
-        //POST通信を行います
+        //GET通信を行います
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
                 //ネットワークにつながっていない際に呼ばれます
+                Log.d("debug", "onFailure")
+
+                //呼び出し元Activityに通知します
+                listener.onFailure()
 
             }
 
             override fun onResponse(call: Call, response: Response) {
                 //レスポンスが返却された際に呼ばれます
+                Log.d("debug", "onSuccess")
+
+                //ステータスコード
+                val statusCode: Int = response.code
+                //json文字列
+                val jsonStr = response.body?.string()
+
+                if (statusCode == Integer.parseInt(Exconst.STATUS_CODE_NORMAL)) {
+
+                    //呼び出し元Activityに通知します
+                    listener.onSuccess(jsonStr)
+
+                } else {
+
+                    //呼び出し元Activityに通知します
+                    listener.onFailure()
+                }
 
             }
         })

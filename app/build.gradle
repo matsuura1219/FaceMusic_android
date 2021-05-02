@@ -71,5 +71,8 @@ dependencies {
     // LiveData
     //noinspection GradleDependency
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    //jsonライブラリ
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
 }

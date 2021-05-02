@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.facemusic.`interface`.SpotifyListener
 import com.example.facemusic.const.Exconst
+import com.example.facemusic.util.EC2ServerComm
 import com.example.facemusic.util.SpotifyApiUtil
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -25,6 +26,8 @@ class HomeActivity : Activity() {
             //画面遷移を行います
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
+
+            //EC2ServerComm.getInstance().getMusicForEmtions(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f)
 
         }
     }

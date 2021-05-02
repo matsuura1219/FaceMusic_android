@@ -175,178 +175,25 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
 
         if (errorCode.equals(Exconst.STATUS_CODE_NORMAL)) {
 
-            Log.d("develop", "FaceAPIを無事に呼び出すことができました")
-            Log.d("develop", "dataは"+data)
-
             val json_data = JSONArray(data)
             val json = json_data.getJSONObject(0)
 
             val faceRectangle: JSONObject = json.getJSONObject("faceRectangle")
             val top: Int = faceRectangle.getInt("top")
-            Log.d("develop", "topは"+top)
             val left: Int = faceRectangle.getInt("left")
-            Log.d("develop", "leftは"+left)
             val width: Int = faceRectangle.getInt("width")
-            Log.d("develop", "widthは"+width)
             val height: Int = faceRectangle.getInt("height")
-            Log.d("develop", "heightは"+height)
 
             val faceAttributes: JSONObject = json.getJSONObject("faceAttributes")
-
-            /*
-            val smile: Double = faceAttributes.getDouble("smile")
-            Log.d("develop", "smileは"+smile)
-            val headPose: JSONObject = faceAttributes.getJSONObject("headPose")
-            val pitch: Double = headPose.getDouble("pitch")
-            Log.d("develop", "pitchは"+pitch)
-            val roll: Double = headPose.getDouble("roll")
-            Log.d("develop", "rollは"+roll)
-            val yaw: Double = headPose.getDouble("yaw")
-            Log.d("develop", "yawは"+yaw)
-
-            val gender = faceAttributes.getString("gender")
-            Log.d("develop", "genderは"+gender)
-            val age: Double = faceAttributes.getDouble("age")
-            Log.d("develop", "ageは"+age)
-
-            val facialHair: JSONObject = faceAttributes.getJSONObject("facialHair")
-            val moustache: Double = facialHair.getDouble("moustache")
-            Log.d("develop", "moustcheは"+moustache)
-            val beard: Double = facialHair.getDouble("beard")
-            Log.d("develop", "beardは"+beard)
-            val sideburns: Double = facialHair.getDouble("sideburns")
-            Log.d("develop", "sideburnsは"+sideburns)
-
-            val glasses: String = faceAttributes.getString("glasses")
-            Log.d("develop", "glassesは"+glasses)
-
-            */
-
-            /*
             val emotion: JSONObject = faceAttributes.getJSONObject("emotion")
             val anger: Double = emotion.getDouble("anger")
-            Log.d("develop", "angerは"+anger)
             val contempt: Double = emotion.getDouble("contempt")
-            Log.d("develop", "comtemptは"+contempt)
             val disgust: Double = emotion.getDouble("disgust")
-            Log.d("develop", "disgustは"+disgust)
             val fear: Double = emotion.getDouble("fear")
-            Log.d("develop", "fearは"+fear)
             val happiness: Double = emotion.getDouble("happiness")
-            Log.d("develop", "hapinessは"+happiness)
             val neutral: Double = emotion.getDouble("neutral")
-            Log.d("develop", "neutralは"+neutral)
             val sadness: Double = emotion.getDouble("sadness")
-            Log.d("develop", "sadnessは"+sadness)
             val surprise: Double = emotion.getDouble("surprise")
-            Log.d("develop", "surpriseは"+surprise)
-
-             */
-
-            val emotion: JSONObject = faceAttributes.getJSONObject("emotion")
-            val anger: Double = emotion.getDouble("anger")
-            Log.d("develop", "angerは"+anger)
-            val contempt: Double = emotion.getDouble("contempt")
-            Log.d("develop", "comtemptは"+contempt)
-            val disgust: Double = emotion.getDouble("disgust")
-            Log.d("develop", "disgustは"+disgust)
-            val fear: Double = emotion.getDouble("fear")
-            Log.d("develop", "fearは"+fear)
-            val happiness: Double = emotion.getDouble("happiness")
-            Log.d("develop", "hapinessは"+happiness)
-            val neutral: Double = emotion.getDouble("neutral")
-            Log.d("develop", "neutralは"+neutral)
-            val sadness: Double = emotion.getDouble("sadness")
-            Log.d("develop", "sadnessは"+sadness)
-            val surprise: Double = emotion.getDouble("surprise")
-            Log.d("develop", "surpriseは"+surprise)
-
-
-            /*
-            val blur: JSONObject = faceAttributes.getJSONObject("blur")
-            val blurLevel: String = blur.getString("blurLevel")
-            Log.d("develop", "blurLevelは"+blurLevel)
-            val blur_value: Double = blur.getDouble("value")
-            Log.d("develop", "blur_valueは"+blur_value)
-
-            val exposure: JSONObject = faceAttributes.getJSONObject("exposure")
-            val exposureLevel: String = exposure.getString("exposureLevel")
-            Log.d("develop", "exposureLevelは"+exposureLevel)
-            val exposure_value: Double = exposure.getDouble("value")
-            Log.d("develop", "exposure_valueは"+exposure_value)
-
-            val noise: JSONObject = faceAttributes.getJSONObject("noise")
-            val noiseLevel: String = noise.getString("noiseLevel")
-            Log.d("develop", "noiseLevelは"+noiseLevel)
-            val noise_value: Double = noise.getDouble("value")
-            Log.d("develop", "noise_valueは"+noise_value)
-
-            val makeup: JSONObject = faceAttributes.getJSONObject("makeup")
-            val eyeMakeup: Boolean = makeup.getBoolean("eyeMakeup")
-            Log.d("develop", "eyeMakeupは"+eyeMakeup)
-            val lipMakeup: Boolean = makeup.getBoolean("lipMakeup")
-            Log.d("develop", "lipMakeupは"+lipMakeup)
-
-            val accesories: JSONArray = faceAttributes.getJSONArray("accessories")
-
-            val occlusion: JSONObject = faceAttributes.getJSONObject("occlusion")
-            val foreheadOccluded: Boolean = occlusion.getBoolean("foreheadOccluded")
-            Log.d("develop", "foreheadOccludedは"+foreheadOccluded)
-            val eyeOccluded = occlusion.getBoolean("eyeOccluded")
-            Log.d("develop", "eyeOccludedは"+eyeOccluded)
-            val mouthOccluded = occlusion.getBoolean("mouthOccluded")
-            Log.d("develop", "mouthOccludedは"+mouthOccluded)
-
-            val hair: JSONObject = faceAttributes.getJSONObject("hair")
-            val bald: Double = hair.getDouble("bald")
-            Log.d("develop", "baldは"+bald)
-            val invisible: Boolean = hair.getBoolean("invisible")
-            Log.d("develop", "invisibleは"+invisible)
-            val hairColor: JSONArray = hair.getJSONArray("hairColor")
-
-            val black = hairColor.getJSONObject(0)
-            val black_color: String = black.getString("color")
-            Log.d("develop", "black_colorは"+black_color)
-            val black_confidence: Double = black.getDouble("confidence")
-            Log.d("develop", "black_confidenceは"+black_confidence)
-
-            val brown = hairColor.getJSONObject(1)
-            val brown_color: String = brown.getString("color")
-            Log.d("develop", "brown_colorは"+brown_color)
-            val brown_confidence: Double = brown.getDouble("confidence")
-            Log.d("develop", "brown_confidenceは"+brown_confidence)
-
-            val gray = hairColor.getJSONObject(2)
-            val gray_color: String = gray.getString("color")
-            Log.d("develop", "gray_colorは"+gray_color)
-            val gray_confidence: Double = gray.getDouble("confidence")
-            Log.d("develop", "gray_confidenceは"+gray_confidence)
-
-            val other = hairColor.getJSONObject(3)
-            val other_color: String = other.getString("color")
-            Log.d("develop", "other_colorは"+other_color)
-            val other_confidence: Double = other.getDouble("confidence")
-            Log.d("develop", "other_confidenceは"+other_confidence)
-
-            val blond = hairColor.getJSONObject(4)
-            val blond_color: String = blond.getString("color")
-            Log.d("develop", "blond_colorは"+blond_color)
-            val blond_confidence: Double = blond.getDouble("confidence")
-            Log.d("develop", "blond_confidenceは"+blond_confidence)
-
-            val red= hairColor.getJSONObject(5)
-            val red_color: String = red.getString("color")
-            Log.d("develop", "red_colorは"+red_color)
-            val red_confidence: Double = red.getDouble("confidence")
-            Log.d("develop", "red_confidenceは"+red_confidence)
-
-            val white = hairColor.getJSONObject(6)
-            val white_color: String = white.getString("color")
-            Log.d("develop", "white_colorは"+white_color)
-            val white_confidence: Double = white.getDouble("confidence")
-            Log.d("develop", "white_confidenceは"+white_confidence)
-
-            */
 
             //MainスレッドでUIを更新します
             val cor = CoroutineScope(Dispatchers.Main)

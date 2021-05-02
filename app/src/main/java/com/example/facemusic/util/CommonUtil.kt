@@ -2,11 +2,14 @@ package com.example.facemusic.util
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.wifi.WifiManager
 import androidx.core.content.ContextCompat.getSystemService
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,7 +52,7 @@ class CommonUtil {
             return file
         }
 
-        /** 自身のMACアドレスを文字列で返す関数です **/
+        /** 時刻を文字列で返す関数です **/
 
         fun getRandomNumber (): String {
 
@@ -62,7 +65,25 @@ class CommonUtil {
 
         }
 
-    }
+        /** 画像URLをBitmapに変換する関数です **/
 
+        fun getBitmapFromUrl (path: String): Bitmap? {
+
+            try {
+
+                val url: URL = URL(path)
+                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                connection.connect()
+                val input = connection.inputStream
+                val bitmap: Bitmap = BitmapFactory.decodeStream(input)
+                return bitmap
+
+            } catch (ie: IOException) {
+
+                ie.printStackTrace()
+                return null
+            }
+        }
+    }
 
 }

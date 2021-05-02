@@ -12,13 +12,20 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/corner_radius">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/jacket"
-            android:paddingLeft="10dp"
-            android:layout_weight="0.5"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/photo"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/jacket"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:layout_weight="0.5"/>-->
+
+<!--        <WebView-->
+<!--            android:id="@+id/photo"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:layout_weight="0.5"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.facemusic.util.SpotifyUtil
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 
@@ -18,7 +17,7 @@ class TestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_test)
 
         //OAuth認証を行います
-        SpotifyUtil.getInstance().authorizeYourApp(this, REQUEST_CODE)
+        //SpotifyUtil.getInstance().authorizeYourApp(this, REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

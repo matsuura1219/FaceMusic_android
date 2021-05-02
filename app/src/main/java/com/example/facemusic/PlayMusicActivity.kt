@@ -17,12 +17,6 @@ class PlayMusicActivity : Activity() {
             finish()
         }
 
-        //SpotifyApiUtil.getInstance().show("spotify:track:67BtfxlNbhBmCDR2L2l8qd")
-
-        //artist.text = SpotifyApiUtil.getInstance().getArtistName("spotify:track:67BtfxlNbhBmCDR2L2l8qd")
-
-        //music.text = SpotifyApiUtil.getInstance().getMusicName("spotify:track:67BtfxlNbhBmCDR2L2l8qd")
-
     }
 
     override fun onResume() {
