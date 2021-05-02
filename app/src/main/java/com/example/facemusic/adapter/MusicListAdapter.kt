@@ -53,14 +53,11 @@ class MusicListAdapter: ArrayAdapter<MusicViewModel> {
         //listviewのposition番目にあるitemsを変数に設定します
         var item = items!![position]
 
-        /*
         //ジャケットを設定
         var photo: WebView = view.photo
         photo.settings.useWideViewPort = true;
         photo.settings.loadWithOverviewMode = true;
         photo.loadUrl(item.imageUrl)
-
-         */
 
         //アーティスト名を設定
         var artist = view.artist
