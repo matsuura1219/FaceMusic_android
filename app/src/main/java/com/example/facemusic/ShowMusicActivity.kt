@@ -20,6 +20,9 @@ import kotlinx.android.synthetic.main.activity_show_music.*
 
 class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
 
+    /** 変数 **/
+    private var listItems: ArrayList<MusicViewModel> = ArrayList<MusicViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_music)
@@ -30,8 +33,9 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
             finish()
         }
 
+        //共通領域から楽曲リストを取得します
         val myApp: MainApplication = MainApplication.getInstance()
-        var listItems = myApp.getMusicViewModel()
+        listItems = myApp.getMusicViewModel()
 
         //アダプタを初期化します
         val adapter = MusicListAdapter(this, R.layout.list_item, listItems)
@@ -46,6 +50,9 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
     /** リストのitemをクリックしたときに呼ばれる関数です */
 
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+        //共通領域に選択した楽曲データをセットします
+        MainApplication.getInstance().setCurrentMusic(listItems.get(p2))
 
         val intent = Intent(this, PlayMusicActivity::class.java)
         startActivity(intent)

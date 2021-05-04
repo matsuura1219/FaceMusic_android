@@ -27,36 +27,7 @@ class HomeActivity : Activity() {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
 
-            //EC2ServerComm.getInstance().getMusicForEmtions(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f)
-
         }
     }
 
-    /*
-    override fun onStart() {
-        super.onStart()
-
-        //Spotifyアプリと接続をします
-        //SpotifyApiUtil.getInstance().connectToSpotifyApp(this, this)
-    }
-    */
-
-
-    /** Spotifyとの認証が完了した時に実行されるコールバック関数です */
-    /*
-    override fun onAuthenticationResponse(resultCode: String) {
-
-        if (resultCode.equals(Exconst.AUTHENTICATION_COMPLETE)) {
-            //認証に成功したとき
-            Log.d("debug", "OK")
-
-            //SpotifyApiUtil.getInstance().playMusic("spotify:track:7dH0dpi751EoguDDg3xx6J")
-
-        } else {
-            //認証に失敗したとき
-
-        }
-    }
-
-    */
 }

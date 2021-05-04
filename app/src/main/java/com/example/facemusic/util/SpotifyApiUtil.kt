@@ -50,6 +50,16 @@ class SpotifyApiUtil: Connector.ConnectionListener {
 
     }
 
+    /** Spotifyと接続しているかを確認する関数です **/
+    fun isConnectedToSpotify (): Boolean {
+
+        if (spotifyAppRemote != null) {
+            return spotifyAppRemote!!.isConnected
+        }
+
+        return false
+    }
+
     /** Spotifyアプリと接続するための関数です **/
     fun connectToSpotifyApp (context: Context, listener: SpotifyListener) {
 
@@ -66,7 +76,9 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     }
 
     /** 音楽を再生する関数です **/
-    fun playMusic (url: String) {
+    fun playMusic (id: String) {
+
+        val url: String = "spotify:track:" + id
 
         if (spotifyAppRemote != null) {
 
@@ -79,54 +91,17 @@ class SpotifyApiUtil: Connector.ConnectionListener {
             }
 
         }
-
-
-
     }
 
-    /** 楽曲を聞くための画面を表示するための初期化を行う関数です **/
-    fun show (url: String) {
+    /** 音楽を停止する関数です **/
+    fun stopMusic () {
 
         if (spotifyAppRemote != null) {
 
-            if (spotifyAppRemote!!.isConnected) {
-                spotifyAppRemote?.playerApi?.play(url)?.setResultCallback {
-
-                    //楽曲を停止させます
-                    //spotifyAppRemote?.playerApi?.pause()
-
-                }?.setErrorCallback {
-
-                    //曲を再生できなかった場合に実行されます
-                }
-            }
-
+            spotifyAppRemote?.playerApi?.pause()
         }
-    }
-
-    /** 歌手名を取得する関数です **/
-
-    fun setArtistName (url: String) {
-
 
     }
-
-
-    /** ジャケット写真を取得する関数です **/
-    /*
-    fun getMusicImage (url: String): Bitmap {
-
-    }
-    */
-
-    /** 楽曲名を取得する関数です **/
-
-    fun setMusicName (url: String) {
-
-
-
-    }
-
 
     /** Spotifyアプリの接続を解除する関数です **/
     fun desconnectToSpotifyApp () {

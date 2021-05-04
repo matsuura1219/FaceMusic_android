@@ -54,7 +54,8 @@ class MainActivity : Activity() {
         mHandler.postDelayed(Runnable {
 
             //一定時間が経った後、画面遷移を行います
-            val intent = Intent(this, HomeActivity::class.java)
+
+            val intent = Intent(this, LoginActivity::class.java)
             //val intent = Intent(this, TestActivity::class.java)
             startActivity(intent)
 
