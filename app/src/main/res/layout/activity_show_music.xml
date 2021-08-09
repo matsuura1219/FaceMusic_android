@@ -1,74 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".PlayMusicActivity"
-android:background="@color/primary">
-
-<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/primary"
+    tools:context=".PlayMusicActivity">
 
-    <!--タイトルバー-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/titlebar_height"
-        android:layout_marginBottom="@dimen/padding"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--タイトルバー-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titlebar_height"
+            android:background="@color/secondary"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--タイトルバーの文字-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/titlebar_height"
+                    android:gravity="center"
+                    android:text="@string/title_show_music_activity"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/titlebar_font_size" />
+
+                <!--戻る矢印-->
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="6dp"
+                    android:src="@drawable/arrows" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!--メインコンテンツ-->
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--タイトルバーの文字-->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/titlebar_height"
-                android:gravity="center"
-                android:text="@string/title_show_music_activity"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/titlebar_font_size" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding">
 
-            <!--戻る矢印-->
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
-                android:padding="6dp"
-                android:src="@drawable/arrows_v3" />
+
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+            <!-- 再生中に表示されるView -->
+
+            <LinearLayout
+                android:id="@+id/musicBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/music_box"
+                android:layout_margin="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:visibility="invisible"
+                android:elevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+
+                        <WebView
+                            android:id="@+id/photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.6" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.35"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/artist"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="16dp"
+                                android:text="test"
+                                android:textSize="12sp"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/music"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="16dp"
+                                android:text="test"
+                                android:textSize="12dp"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/playButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.6"
+                            android:src="@drawable/play" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
         </FrameLayout>
 
-    </LinearLayout>
-
-    <!--メインコンテンツ-->
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/padding"
-        android:paddingRight="@dimen/padding">
-
-
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:scrollbars="none" />
 
     </LinearLayout>
-
-
-
-
-</LinearLayout>
 
 </LinearLayout>

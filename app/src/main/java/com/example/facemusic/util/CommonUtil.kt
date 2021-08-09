@@ -84,6 +84,9 @@ class CommonUtil {
                 return null
             }
         }
+
+
+        /** DrawableをBitmapに */
     }
 
 }

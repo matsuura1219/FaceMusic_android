@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/titlebar_height"
                 android:orientation="horizontal"
+                android:background="@color/secondary"
                 android:layout_marginBottom="@dimen/padding">
 
                 <FrameLayout
@@ -31,11 +32,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/titlebar_height"
-                        android:textAlignment="center"
                         android:gravity="center"
-                        android:textColor="@color/black"
-                        android:text="@string/title_show_result_for_face_api_activity"
-                        android:textSize="@dimen/titlebar_font_size"/>
+                        android:text="感情の推論結果"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/titlebar_font_size" />
 
                     <!--戻る矢印-->
                     <ImageView
@@ -44,7 +45,7 @@
                         android:layout_height="48dp"
                         android:padding="6dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/arrows_v3"/>
+                        android:src="@drawable/arrows"/>
 
                 </FrameLayout>
 
@@ -59,7 +60,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/padding"
-                    android:paddingRight="@dimen/padding">
+                    android:paddingRight="@dimen/padding"
+                    android:layout_marginTop="24dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -67,12 +69,13 @@
                         android:orientation="vertical"
                         android:layout_marginBottom="@dimen/margin_between_view_and_view">
 
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="anger"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -80,6 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="?android:attr/progressBarStyleHorizontal"
+
                             android:max="100"/>
 
                     </LinearLayout>
@@ -95,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:text="comtempt"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -119,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:text="disgust"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -144,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:text="fear"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -167,7 +171,7 @@
                             android:layout_height="wrap_content"
                             android:text="happiness"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -190,7 +194,7 @@
                             android:layout_height="wrap_content"
                             android:text="neutral"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -213,7 +217,7 @@
                             android:layout_height="wrap_content"
                             android:text="sadness"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -237,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:text="surprise"
                             android:textSize="@dimen/subtitle"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
 
                         <ProgressBar
@@ -269,6 +273,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:text="NEXT"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size"
                     android:background="@drawable/shape_rounded_corners"
                     android:foreground="?android:selectableItemBackground"/>
