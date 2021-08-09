@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.example.facemusic.`interface`.SpotifyListener
 import com.example.facemusic.const.Exconst
 import com.example.facemusic.util.EC2ServerComm
 import com.example.facemusic.util.SpotifyApiUtil
@@ -37,10 +36,6 @@ class HomeActivity : Activity() {
             startActivity(intent)
 
         }
-
-
-
-
 
     }
 

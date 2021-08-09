@@ -3,7 +3,8 @@ package com.example.facemusic.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
-import com.example.facemusic.`interface`.SpotifyListener
+import com.example.facemusic.`interface`.SpotifyAuthListener
+import com.example.facemusic.`interface`.SpotifyIsPlayingListener
 import com.example.facemusic.const.Exconst
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
@@ -12,6 +13,7 @@ import com.spotify.android.appremote.api.error.CouldNotFindSpotifyApp
 import com.spotify.protocol.types.Image
 import com.spotify.protocol.types.ImageUri
 import com.spotify.protocol.types.PlayerState
+import com.spotify.protocol.types.Track
 import kotlinx.coroutines.runBlocking
 
 /** Spotifyの web API を呼び出すクラスです **/
@@ -31,9 +33,10 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     private var connectionParams: ConnectionParams? = null
     //SpotifyAPIを使用するためのインスタンス
     private var spotifyAppRemote: SpotifyAppRemote? = null
-    //リスナー
-    private var _listener: SpotifyListener? = null
-
+    //リスナー（認証後に呼ばれるインターフェース）
+    private var _listener: SpotifyAuthListener? = null
+    //リスナー（曲が再生されているかどうかを判定した後に呼ばれるインターフェース
+    private var _isPlayingListener: SpotifyIsPlayingListener? = null
 
     /** シングルトン **/
     companion object {
@@ -63,7 +66,7 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     }
 
     /** Spotifyアプリと接続するための関数です **/
-    fun connectToSpotifyApp (context: Context, listener: SpotifyListener) {
+    fun connectToSpotifyApp (context: Context, listener: SpotifyAuthListener) {
 
         _listener = listener
 
@@ -117,7 +120,7 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     }
 
 
-    /** 曲の再生位置を変更する関数です */
+    /** 曲の再生位置を変更する関数です **/
     fun changeMusicPosition (position: Long) {
 
         if (spotifyAppRemote != null) {
@@ -126,13 +129,23 @@ class SpotifyApiUtil: Connector.ConnectionListener {
         }
     }
 
-    /** 再生中の曲の時間を取得する関数です */
-    fun getMusicTime (): Long {
+    /** 曲が再生中かどうかを判定する関数です **/
+    fun isPlaying (listener: SpotifyIsPlayingListener) {
 
-        return 258000
+        if (spotifyAppRemote != null) {
+
+            spotifyAppRemote!!.playerApi?.playerState.setResultCallback {
+
+                var isPlaying = !(it.isPaused)
+
+                listener.onIsPlayingResponse(isPlaying)
+
+            }
+
+
+        }
 
     }
-
 
 
     /** Spotifyアプリの接続を解除する関数です **/
@@ -143,7 +156,8 @@ class SpotifyApiUtil: Connector.ConnectionListener {
         }
     }
 
-    /** 接続に成功した場合に実行されるコールバック関数です **/
+    /** 認証時、接続に成功した場合に実行されるコールバック関数です **/
+
     override fun onConnected(p0: SpotifyAppRemote?) {
 
         spotifyAppRemote = p0
@@ -153,7 +167,8 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     }
 
 
-    /** 接続に失敗した場合に実行されるコールバック関数です **/
+    /** 認証時、接続に失敗した場合に実行されるコールバック関数です **/
+
     override fun onFailure(p0: Throwable?) {
 
         if (p0 is CouldNotFindSpotifyApp) {

@@ -70,8 +70,6 @@
 
             </LinearLayout>
 
-            <!-- 再生中に表示されるView -->
-
             <LinearLayout
                 android:id="@+id/musicBox"
                 android:layout_width="match_parent"
@@ -81,7 +79,6 @@
                 android:layout_margin="16dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:visibility="invisible"
                 android:elevation="10dp">
 
                 <LinearLayout
@@ -97,7 +94,7 @@
                         android:orientation="horizontal">
 
                         <WebView
-                            android:id="@+id/photo"
+                            android:id="@+id/photo_playing"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0.6" />
@@ -109,7 +106,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/artist"
+                                android:id="@+id/artist_playing"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.5"
@@ -120,7 +117,7 @@
                                 android:textColor="@color/black" />
 
                             <TextView
-                                android:id="@+id/music"
+                                android:id="@+id/music_playing"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.5"
@@ -153,7 +150,6 @@
 
 
             </LinearLayout>
-
 
         </FrameLayout>
 

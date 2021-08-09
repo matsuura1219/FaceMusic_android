@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import com.amazonaws.services.securitytoken.model.PackedPolicyTooLargeException
+import com.example.facemusic.`interface`.SpotifyIsPlayingListener
 import com.example.facemusic.adapter.MusicListAdapter
 import com.example.facemusic.application.MainApplication
 import com.example.facemusic.data.MusicListItem
@@ -16,11 +17,13 @@ import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.util.SpotifyApiUtil
 import kotlinx.android.synthetic.main.activity_show_music.*
 import kotlinx.android.synthetic.main.activity_show_music.back
-import kotlinx.android.synthetic.main.activity_show_music.music
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /** おすすめの曲を表示するActivityです */
 
-class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
+class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener, SpotifyIsPlayingListener {
 
     /** 変数 **/
     private var listItems: ArrayList<MusicViewModel> = ArrayList<MusicViewModel>()
@@ -52,16 +55,9 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
     override fun onResume() {
         super.onResume()
 
-        if (!MainApplication.getInstance().getCurrentMusic().artist.equals("")) {
-            musicBox.visibility = View.VISIBLE
-            artist.text = MainApplication.getInstance().getCurrentMusic().artist
-            music.text = MainApplication.getInstance().getCurrentMusic().music
-            //ジャケット写真
-            photo.settings.useWideViewPort = true;
-            photo.settings.loadWithOverviewMode = true;
-            photo.loadUrl(MainApplication.getInstance().getCurrentMusic().imageUrl)
+        SpotifyApiUtil.getInstance().isPlaying(this)
 
-        }
+
     }
 
     /** リストのitemをクリックしたときに呼ばれる関数です */
@@ -73,6 +69,36 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
 
         val intent = Intent(this, PlayMusicActivity::class.java)
         startActivity(intent)
+    }
+
+
+    /** 曲が再生されているかどうかを判定するコールバック関数です **/
+    override fun onIsPlayingResponse(isPlaying: Boolean) {
+
+        //MainスレッドでUIを更新します
+        val cor = CoroutineScope(Dispatchers.Main)
+
+        cor.launch {
+
+            if (isPlaying) {
+                //曲が再生されている場合
+
+                musicBox.visibility = View.VISIBLE
+                artist_playing.text = MainApplication.getInstance().getCurrentMusic().artist
+                music_playing.text = MainApplication.getInstance().getCurrentMusic().music
+                //ジャケット写真
+                photo_playing.settings.useWideViewPort = true;
+                photo_playing.settings.loadWithOverviewMode = true;
+                photo_playing.loadUrl(MainApplication.getInstance().getCurrentMusic().imageUrl)
+
+            } else {
+
+                musicBox.visibility = View.INVISIBLE
+
+            }
+
+        }
+
     }
 
 }

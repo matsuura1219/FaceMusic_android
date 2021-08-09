@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.AlphaAnimation
-import com.example.facemusic.`interface`.SpotifyListener
+import com.example.facemusic.`interface`.SpotifyAuthListener
 import com.example.facemusic.const.Exconst
 import com.example.facemusic.util.DialogUtil
 import com.example.facemusic.util.SpotifyApiUtil
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 /** オープニング画面です **/
 
-class MainActivity : Activity(), SpotifyListener, DialogUtil.OnClickButton  {
+class MainActivity : Activity(), SpotifyAuthListener, DialogUtil.OnClickButton  {
 
     /** 定数 **/
     //ハンドラー（UI処理をサブスレッドで実行するためのクラスです）
@@ -87,8 +87,6 @@ class MainActivity : Activity(), SpotifyListener, DialogUtil.OnClickButton  {
                 DialogUtil.getInstance().showCloseMessage("認証に失敗しました。アプリを終了します。", "はい", this, this)
 
             }
-
-
 
         }
 
