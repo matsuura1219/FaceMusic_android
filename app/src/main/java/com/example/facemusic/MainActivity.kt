@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.AlphaAnimation
+import com.example.facemusic.`interface`.SpotifyListener
+import com.example.facemusic.const.Exconst
+import com.example.facemusic.util.DialogUtil
+import com.example.facemusic.util.SpotifyApiUtil
 //Kotlin Android Extensionsにより、xmlのコンポーネントの初期化をする必要なく、IDを変数として扱うことができます
 import kotlinx.android.synthetic.main.activity_main.*
 
 /** オープニング画面です **/
 
-class MainActivity : Activity() {
+class MainActivity : Activity(), SpotifyListener, DialogUtil.OnClickButton  {
 
     /** 定数 **/
     //ハンドラー（UI処理をサブスレッドで実行するためのクラスです）
@@ -53,13 +57,46 @@ class MainActivity : Activity() {
 
         mHandler.postDelayed(Runnable {
 
-            //一定時間が経った後、画面遷移を行います
-
-            val intent = Intent(this, LoginActivity::class.java)
-            //val intent = Intent(this, TestActivity::class.java)
-            startActivity(intent)
+            //Spotifyアプリと接続をします
+            SpotifyApiUtil.getInstance().connectToSpotifyApp(this, this)
 
         }, animationTime)
+
+    }
+
+    /** Spotifyとの認証が完了した時に実行されるコールバック関数です */
+    override fun onAuthenticationResponse(resultCode: String) {
+
+        if (resultCode.equals(Exconst.AUTHENTICATION_COMPLETE)) {
+            //認証に成功したとき
+
+            //画面遷移を行います
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+
+        } else {
+
+            if (resultCode.equals(Exconst.COULD_NOT_FIND_APP)) {
+
+                //アプリが未インストールの場合
+                DialogUtil.getInstance().showAlertMessageToGooglePlay("Spotifyアプリがインストールされていないため、本アプリを使用できません。Google Playにて、アプリのインストールをお願いします。", "はい", this, this)
+
+            } else {
+
+                //認証に失敗したとき
+                DialogUtil.getInstance().showCloseMessage("認証に失敗しました。アプリを終了します。", "はい", this, this)
+
+            }
+
+
+
+        }
+
+    }
+
+    /** ポップアップ画面が表示され、ボタンを押下した際に実行されるコールバック関数です */
+    override fun onClickPositiveButton() {
+
 
     }
 

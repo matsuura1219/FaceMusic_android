@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <!--ステータスバーの色に適用される属性はcolorPrimaryDarkのためここを表示したい色に変更します-->
-        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorPrimaryDark">@color/secondary</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

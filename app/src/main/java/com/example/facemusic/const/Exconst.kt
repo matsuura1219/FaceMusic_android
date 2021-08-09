@@ -1,5 +1,7 @@
 package com.example.facemusic.const
 
+import com.spotify.android.appremote.api.error.CouldNotFindSpotifyApp
+
 class Exconst {
 
     companion object {
@@ -18,6 +20,8 @@ class Exconst {
         val AUTHENTICATION_COMPLETE: String = "1"
         //失敗
         val AUTHENTICATION_FAILED: String = "0"
+        //アプリ未インストール
+        val COULD_NOT_FIND_APP: String = "9"
 
     }
 }

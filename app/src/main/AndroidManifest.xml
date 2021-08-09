@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.facemusic">
+
     <!-- カメラの権限を許可します -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- インターネットに接続する許可をします -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- ネットワークの進捗状況を確認するための許可をします -->

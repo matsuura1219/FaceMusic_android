@@ -21,13 +21,27 @@ class HomeActivity : Activity() {
         setContentView(R.layout.activity_home)
 
         //撮影画像から表情を取得し、最適な楽曲を提供するcardViewのクリックイベントを設定します
-        recommendMusicForAi.setOnClickListener {
+        emotion_detection.setOnClickListener {
 
             //画面遷移を行います
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
 
         }
+
+        //撮影画像から年齢を取得し、最適な楽曲を提供するcardViewのクリックイベントを設定します
+        age_detection.setOnClickListener {
+
+            //画面遷移を行います
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
+
+
+
     }
 
 }

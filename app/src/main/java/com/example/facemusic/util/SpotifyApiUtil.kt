@@ -8,9 +8,11 @@ import com.example.facemusic.const.Exconst
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
+import com.spotify.android.appremote.api.error.CouldNotFindSpotifyApp
 import com.spotify.protocol.types.Image
 import com.spotify.protocol.types.ImageUri
 import com.spotify.protocol.types.PlayerState
+import kotlinx.coroutines.runBlocking
 
 /** Spotifyの web API を呼び出すクラスです **/
 
@@ -93,6 +95,17 @@ class SpotifyApiUtil: Connector.ConnectionListener {
         }
     }
 
+    /** 音楽を途中から再生する関数です **/
+    fun resumePlayMusic () {
+
+        if (spotifyAppRemote != null) {
+
+            spotifyAppRemote?.playerApi?.resume()
+        }
+    }
+
+
+
     /** 音楽を停止する関数です **/
     fun stopMusic () {
 
@@ -102,6 +115,25 @@ class SpotifyApiUtil: Connector.ConnectionListener {
         }
 
     }
+
+
+    /** 曲の再生位置を変更する関数です */
+    fun changeMusicPosition (position: Long) {
+
+        if (spotifyAppRemote != null) {
+
+            spotifyAppRemote?.playerApi?.seekToRelativePosition(position)
+        }
+    }
+
+    /** 再生中の曲の時間を取得する関数です */
+    fun getMusicTime (): Long {
+
+        return 258000
+
+    }
+
+
 
     /** Spotifyアプリの接続を解除する関数です **/
     fun desconnectToSpotifyApp () {
@@ -124,7 +156,14 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     /** 接続に失敗した場合に実行されるコールバック関数です **/
     override fun onFailure(p0: Throwable?) {
 
-        _listener?.onAuthenticationResponse(Exconst.AUTHENTICATION_FAILED)
+        if (p0 is CouldNotFindSpotifyApp) {
+
+            _listener?.onAuthenticationResponse(Exconst.COULD_NOT_FIND_APP)
+
+        } else {
+
+            _listener?.onAuthenticationResponse(Exconst.AUTHENTICATION_FAILED)
+        }
 
     }
 

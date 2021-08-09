@@ -15,6 +15,8 @@ import com.example.facemusic.data.MusicListItem
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.util.SpotifyApiUtil
 import kotlinx.android.synthetic.main.activity_show_music.*
+import kotlinx.android.synthetic.main.activity_show_music.back
+import kotlinx.android.synthetic.main.activity_show_music.music
 
 /** おすすめの曲を表示するActivityです */
 
@@ -45,6 +47,21 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener {
         //クリックイベントを登録します
         listView.onItemClickListener = this
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (!MainApplication.getInstance().getCurrentMusic().artist.equals("")) {
+            musicBox.visibility = View.VISIBLE
+            artist.text = MainApplication.getInstance().getCurrentMusic().artist
+            music.text = MainApplication.getInstance().getCurrentMusic().music
+            //ジャケット写真
+            photo.settings.useWideViewPort = true;
+            photo.settings.loadWithOverviewMode = true;
+            photo.loadUrl(MainApplication.getInstance().getCurrentMusic().imageUrl)
+
+        }
     }
 
     /** リストのitemをクリックしたときに呼ばれる関数です */
