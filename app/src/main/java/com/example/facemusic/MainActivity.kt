@@ -23,7 +23,7 @@ class MainActivity : Activity(), SpotifyAuthListener, DialogUtil.OnClickButton  
     //起動からロゴのフェードインにかかる時間
     private val fadeInAnimationTime: Long = 1000
     //起動から画面遷移にかかる時間
-    private val animationTime: Long = 2000
+    private val ANIMATION_TIME: Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +43,7 @@ class MainActivity : Activity(), SpotifyAuthListener, DialogUtil.OnClickButton  
         fadeAnim.duration = fadeInAnimationTime
         //アルファー値をアニメーション終了後の値を維持するように設定
         fadeAnim.fillAfter = true
+        //アニメーションを実行します
         logo.animation = fadeAnim
     }
 
@@ -60,7 +61,7 @@ class MainActivity : Activity(), SpotifyAuthListener, DialogUtil.OnClickButton  
             //Spotifyアプリと接続をします
             SpotifyApiUtil.getInstance().connectToSpotifyApp(this, this)
 
-        }, animationTime)
+        }, ANIMATION_TIME)
 
     }
 

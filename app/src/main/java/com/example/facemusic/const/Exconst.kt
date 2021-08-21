@@ -23,5 +23,9 @@ class Exconst {
         //アプリ未インストール
         val COULD_NOT_FIND_APP: String = "9"
 
+        var EMOTION_DETECTION: Int = 0
+        val FACE_DETECTION: Int = 1
+
+
     }
 }

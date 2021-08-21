@@ -38,6 +38,11 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener, SpotifyIs
             finish()
         }
 
+        //再生中の曲を表示する画面のクリック処理
+        musicBox.setOnClickListener {
+            moveToPlayMusicActivitiy()
+        }
+
         //共通領域から楽曲リストを取得します
         val myApp: MainApplication = MainApplication.getInstance()
         listItems = myApp.getMusicViewModel()
@@ -61,13 +66,24 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener, SpotifyIs
     }
 
     /** リストのitemをクリックしたときに呼ばれる関数です */
-
     override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
         //共通領域に選択した楽曲データをセットします
         MainApplication.getInstance().setCurrentMusic(listItems.get(p2))
 
         val intent = Intent(this, PlayMusicActivity::class.java)
+        val data: String = "onItemClick"
+        intent.putExtra("data", data)
+        startActivity(intent)
+    }
+
+
+    /** 再生中の曲を表示するボックスをクリックした際に実行する関数です **/
+    private fun moveToPlayMusicActivitiy () {
+
+        val intent = Intent(this, PlayMusicActivity::class.java)
+        val data: String = "moveToPlayActivity"
+        intent.putExtra("data", data)
         startActivity(intent)
     }
 
@@ -83,13 +99,23 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener, SpotifyIs
             if (isPlaying) {
                 //曲が再生されている場合
 
-                musicBox.visibility = View.VISIBLE
-                artist_playing.text = MainApplication.getInstance().getCurrentMusic().artist
-                music_playing.text = MainApplication.getInstance().getCurrentMusic().music
-                //ジャケット写真
-                photo_playing.settings.useWideViewPort = true;
-                photo_playing.settings.loadWithOverviewMode = true;
-                photo_playing.loadUrl(MainApplication.getInstance().getCurrentMusic().imageUrl)
+                if (!MainApplication.getInstance().getIsPlayingMusic().artist.equals("")) {
+
+                    musicBox.visibility = View.VISIBLE
+                    artist_playing.text = MainApplication.getInstance().getIsPlayingMusic().artist
+                    music_playing.text = MainApplication.getInstance().getIsPlayingMusic().music
+
+                    //ジャケット写真
+                    photo_playing.settings.useWideViewPort = true;
+                    photo_playing.settings.loadWithOverviewMode = true;
+                    photo_playing.loadUrl(MainApplication.getInstance().getIsPlayingMusic().imageUrl)
+
+                } else {
+
+                    musicBox.visibility = View.INVISIBLE
+
+                }
+
 
             } else {
 

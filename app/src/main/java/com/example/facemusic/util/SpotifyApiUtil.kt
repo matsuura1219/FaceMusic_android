@@ -4,16 +4,14 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import com.example.facemusic.`interface`.SpotifyAuthListener
+import com.example.facemusic.`interface`.SpotifyGetCurrentMusicPosition
 import com.example.facemusic.`interface`.SpotifyIsPlayingListener
 import com.example.facemusic.const.Exconst
 import com.spotify.android.appremote.api.ConnectionParams
 import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.android.appremote.api.error.CouldNotFindSpotifyApp
-import com.spotify.protocol.types.Image
-import com.spotify.protocol.types.ImageUri
-import com.spotify.protocol.types.PlayerState
-import com.spotify.protocol.types.Track
+import com.spotify.protocol.types.*
 import kotlinx.coroutines.runBlocking
 
 /** Spotifyの web API を呼び出すクラスです **/
@@ -33,10 +31,13 @@ class SpotifyApiUtil: Connector.ConnectionListener {
     private var connectionParams: ConnectionParams? = null
     //SpotifyAPIを使用するためのインスタンス
     private var spotifyAppRemote: SpotifyAppRemote? = null
+    
     //リスナー（認証後に呼ばれるインターフェース）
     private var _listener: SpotifyAuthListener? = null
     //リスナー（曲が再生されているかどうかを判定した後に呼ばれるインターフェース
     private var _isPlayingListener: SpotifyIsPlayingListener? = null
+    //リスナー（曲の再生位置を取得した後に呼ばれるインターフェース）
+    private var _getCurrentMusicPositionListener: SpotifyGetCurrentMusicPosition? = null
 
     /** シングルトン **/
     companion object {
@@ -142,7 +143,55 @@ class SpotifyApiUtil: Connector.ConnectionListener {
 
             }
 
+        }
 
+    }
+
+    /** 再生中の曲の情報を取得する関数です **/
+    fun getMusicInfo (): Long{
+
+        if (spotifyAppRemote != null) {
+
+            var duration: Long = 0L
+
+            val result = spotifyAppRemote!!.playerApi.playerState.setResultCallback {
+
+                duration = it.track.duration
+                /*
+                val track = it.track
+                val album: Album = track.album
+                val artist: Artist = track.artist
+                val artists: List<Artist> = track.artists
+                val duration: Long = track.duration
+                val imageUrl: ImageUri = track.imageUri
+
+                */
+
+                return@setResultCallback
+
+            }
+
+            Log.d("tag", duration.toString())
+
+            return  duration
+        }
+
+        return 0L
+
+    }
+
+    //再生中の曲が何ms秒かを取得する関数です
+    fun getCurrentMusicPosition (listener: SpotifyGetCurrentMusicPosition) {
+
+        if (spotifyAppRemote != null) {
+
+            spotifyAppRemote!!.playerApi.playerState.setResultCallback {
+
+                var currentPosition: Long = it.playbackPosition
+
+                listener.getCurrentMusicPosition(currentPosition)
+
+            }
         }
 
     }

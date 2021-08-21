@@ -7,20 +7,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
+import com.example.facemusic.`interface`.SpotifyGetCurrentMusicPosition
+import com.example.facemusic.`interface`.SpotifyIsPlayingListener
 import com.example.facemusic.application.MainApplication
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.util.SpotifyApiUtil
 import kotlinx.android.synthetic.main.activity_play_music.*
+import kotlinx.android.synthetic.main.activity_play_music.playButton
 import kotlinx.android.synthetic.main.activity_play_music.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.sql.Time
 import java.util.*
 import javax.net.ssl.HandshakeCompletedListener
 
 /** 楽曲を再生するActivityです */
 
-class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener {
+class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener, SpotifyIsPlayingListener,
+    SpotifyGetCurrentMusicPosition, View.OnClickListener {
 
     /** 変数 **/
 
@@ -28,29 +36,72 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener {
 
     //ドラッグ前のseekBarの位置
     private var positionBeforeDrag: Int = 0
+
     //曲が再生されているかどうか
     private var isPlay: Boolean = false
+
     //曲を再生したことがあるかどうか
     private var havePlayed: Boolean = false
+
     //ハンドラ
     private var handler: Handler = Handler(Looper.getMainLooper())
+
     //タイマー
     private var timer: Timer? = null
+
+    //仮変数
+    private val MUSIC_TIME: Long = 280000
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_music)
 
-        //戻るボタン
-        back.setOnClickListener {
-            finish()
-        }
+        //初期化処理を行います
+        init()
 
-        //インターフェースを実装する
+        //Viewの初期化処理を行います
+        initComponent()
+
+        //現在の曲の再生状況を確認します
+        getCurrentSituation()
+
+
+    }
+
+
+    /** 初期化を行う関数です **/
+    private fun init () {
+
+        //イベント設定
+        back.setOnClickListener(this)
+        playButton.setOnClickListener(this)
         seekBar.setOnSeekBarChangeListener(this)
 
-        //楽曲情報
+        //選択したMusicViewModelを取得します
         data = MainApplication.getInstance().getCurrentMusic()
+
+    }
+
+
+    /** Viewの初期化処理 **/
+    private fun initComponent () {
+
+        var receiveData: String? = intent.getStringExtra("data")
+
+        if (receiveData != null) {
+
+            if (receiveData.equals("onItemClick")) {
+
+                data = MainApplication.getInstance().getCurrentMusic()
+
+            } else if (receiveData.equals("moveToPlayActivity")) {
+
+                data = MainApplication.getInstance().getIsPlayingMusic()
+
+            }
+
+        }
 
         //ジャケット写真
         jacket.settings.useWideViewPort = true;
@@ -62,57 +113,79 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener {
         //楽曲名
         music.text = data.music
 
-        //「再生」もしくは「停止」ボタンをクリックする
-        playButton.setOnClickListener {
-
-            if (!isPlay) {
-                //まだ曲が再生されていない場合
-                isPlay = true
-
-                if (!havePlayed) {
-                    //その曲を1度も再生していない場合
-                    //曲を初めから再生します
-                    playMusic()
-                    havePlayed = true
-
-                } else {
-                    //曲を停止するなどして、1度曲を再生した場合
-                    //曲を途中から再生する
-                    resumeMusic()
-
-                }
-
-            } else {
-                //曲が再生されている場合
-                isPlay = false
-                //曲を停止します
-                stopMusic()
-
-            }
-        }
-
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
+    /** 現在の再生状況の確認を行う関数です **/
+    private fun getCurrentSituation () {
 
-    override fun onPause() {
-        super.onPause()
+        //現在曲が再生中かを確認します
+        SpotifyApiUtil.getInstance().isPlaying(this)
 
     }
 
 
-    /** seekBarを曲に応じて、変更させる関数です
-     * @param position 現在のseekBarの位置
-     * */
+    /** 曲を再生する関数です **/
+    private fun playMusic () {
 
-    private fun changeSeekBarPosition (position: Int) {
+        //「再生」ボタンを「停止」ボタンに変更します
+        playButton.setImageResource(R.drawable.stop)
+        //指定の曲を再生します
+        SpotifyApiUtil.getInstance().playMusic(data.id)
+        //seekBarの位置を自動で変更します
+        changeSeekBarPosition(0)
+
+        isPlay = true
+        havePlayed = true
+
+        //共通領域に設定します
+        MainApplication.getInstance().setIsPlayingMusic(data)
+
+    }
+
+
+    /** 曲を停止する関数です **/
+    private fun stopMusic () {
+
+        //「停止」ボタンを「再生」ボタンに変更します
+        playButton.setImageResource(R.drawable.play)
+        //曲を停止させます
+        SpotifyApiUtil.getInstance().stopMusic()
+        //seekBarの自動アニメーションを停止させます
+        stopSeekBarPosition()
+
+        //共通領域に設定します
+        MainApplication.getInstance().clearIsPlayingMusic()
+
+        isPlay = false
+
+    }
+
+    /** 曲を途中から再生する関数です **/
+    private fun resumeMusic () {
+
+        //「再生」ボタンを「停止」ボタンに変更します
+        playButton.setImageResource(R.drawable.stop)
+        //曲を途中から再生します
+        SpotifyApiUtil.getInstance().resumePlayMusic()
+        //seekBarの位置を自動で変更します
+        changeSeekBarPosition(seekBar.progress)
+
+        //共通領域に設定します
+        MainApplication.getInstance().setIsPlayingMusic(data)
+
+        isPlay = true
+
+
+    }
+
+
+    /** シークバーを自動で移動させる関数です **/
+    private fun changeSeekBarPosition(position: Int) {
 
         var cPosition = position
 
         timer = Timer()
-        timer!!.schedule(object: TimerTask() {
+        timer!!.schedule(object : TimerTask() {
 
             override fun run() {
 
@@ -124,66 +197,27 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener {
                 }
 
             }
-        }, 0, 280000 / 100)
+        }, 0, MUSIC_TIME / 100)
+
 
     }
-    
-    /** seekBarの自動アニメーションを停止させる関数です */
+
+    /** シークバーを停止させる関数です **/
     private fun stopSeekBarPosition () {
 
         timer?.cancel()
         timer = null
-    }
-
-
-
-    /** 曲を再生する関数です */
-    private fun playMusic () {
-
-        //「再生」ボタンを「停止」ボタンに変更します
-        playButton.setImageResource(R.drawable.stop)
-        //指定の曲を再生します
-        SpotifyApiUtil.getInstance().playMusic(data.id)
-        //seekBarの位置を自動で変更します
-        changeSeekBarPosition(0)
-
 
     }
 
-    /** 曲を再度再生する関数です */
-    private fun resumeMusic () {
-
-        //「再生」ボタンを「停止」ボタンに変更します
-        playButton.setImageResource(R.drawable.stop)
-        //曲を途中から再生します
-        SpotifyApiUtil.getInstance().resumePlayMusic()
-        //seekBarの位置を自動で変更します
-        changeSeekBarPosition(seekBar.progress)
-
-    }
-
-    /** 曲を停止する関数です */
-    private fun stopMusic () {
-        //「停止」ボタンを「再生」ボタンに変更します
-        playButton.setImageResource(R.drawable.play)
-        //曲を停止させます
-        SpotifyApiUtil.getInstance().stopMusic()
-        //seekBarの自動アニメーションを停止させます
-        stopSeekBarPosition()
-
-    }
-
-
-    /** 次の曲を再生する際の関数です */
-    private fun playNextButton () {
-
-    }
 
 
     /** つまみがドラックされると呼ばれるコールバック関数です */
     override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
 
     }
+
+
 
     /** つまみがタッチされたときに呼ばれるコールバック関数です */
     override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -194,19 +228,187 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener {
 
     }
 
+
     /** つまみがリリースされた時に呼ばれるコールバック関数です */
     override fun onStopTrackingTouch(p0: SeekBar?) {
 
         //ドラッグ前後のseekBarの位置の差
         var changeMusicPosition: Int = p0!!.progress - positionBeforeDrag
         //曲の位置を変更します
-        SpotifyApiUtil.getInstance().changeMusicPosition(changeMusicPosition.toLong() * 280000 / 100)
+        SpotifyApiUtil.getInstance()
+            .changeMusicPosition(changeMusicPosition.toLong() * MUSIC_TIME / 100)
         //seekBarの位置を自動で変更します
         changeSeekBarPosition(seekBar.progress)
 
     }
 
 
+    /** 曲が再生されているか判定したのちに実行されるコールバック関数です **/
+    override fun onIsPlayingResponse(isPlaying: Boolean) {
 
 
+        if (isPlaying) {
+            //曲が再生されている場合
+
+            if (!MainApplication.getInstance().getIsPlayingMusic().artist.equals("")) {
+                //本アプリ内で現在曲が再生されている場合 （Spotifyアプリは除く）
+                //途中から曲を再生します
+
+                isPlay = true
+                havePlayed = true
+
+                if (MainApplication.getInstance().getCurrentMusic().artist.equals(MainApplication.getInstance().getIsPlayingMusic().artist)
+                    && MainApplication.getInstance().getCurrentMusic().music.equals(MainApplication.getInstance().getIsPlayingMusic().music)) {
+
+                    val cor = CoroutineScope(Dispatchers.Main)
+
+                    cor.launch {
+
+                        //再生中の曲と表示する画面が同一の場合
+                        playButton.setImageResource(R.drawable.stop)
+
+                    }
+
+
+                    //曲の再生位置を取得します
+                    SpotifyApiUtil.getInstance().getCurrentMusicPosition(this)
+
+
+                } else {
+
+                    val cor = CoroutineScope(Dispatchers.Main)
+
+                    cor.launch {
+
+                        stopMusic()
+                        playMusic()
+
+                    }
+
+
+                }
+
+
+            } else {
+
+                val cor = CoroutineScope(Dispatchers.Main)
+
+                cor.launch {
+
+                    //楽曲を再生します
+                    playMusic()
+
+                }
+
+            }
+
+        } else {
+
+            val cor = CoroutineScope(Dispatchers.Main)
+
+            cor.launch {
+
+                //楽曲を再生します
+                playMusic()
+
+            }
+
+        }
+
+
+        /*
+        //MainスレッドでUIを更新します
+        val cor = CoroutineScope(Dispatchers.Main)
+
+        cor.launch {
+
+            if (isPlaying) {
+                //曲が再生されている場合
+
+                if (!MainApplication.getInstance().getIsPlayingMusic().artist.equals("")) {
+                    //本アプリ内で現在曲が再生されている場合 （Spotifyアプリは除く）
+                    //途中から曲を再生します
+                    //resumeMusic()
+
+                    isPlay = true
+                    havePlayed = true
+
+                    if (MainApplication.getInstance().getCurrentMusic().artist.equals(MainApplication.getInstance().getIsPlayingMusic().artist)
+                        && MainApplication.getInstance().getCurrentMusic().music.equals(MainApplication.getInstance().getIsPlayingMusic().music)) {
+
+                        //再生中の曲と表示する画面が同一の場合
+                        playButton.setImageResource(R.drawable.stop)
+
+                        //曲の再生位置を取得します
+                        SpotifyApiUtil.getInstance().getCurrentMusicPosition(this)
+
+
+                    } else {
+
+                        stopMusic()
+                        playMusic()
+                    }
+
+
+                } else {
+
+                    //楽曲を再生します
+                    playMusic()
+
+                }
+
+            } else {
+
+                //楽曲を再生します
+                playMusic()
+
+            }
+
+        }
+
+         */
+
+
+    }
+
+
+    /** 曲の再生位置を取得したのちに実行されるコールバック関数です **/
+    override fun getCurrentMusicPosition(position: Long) {
+
+        changeSeekBarPosition((position * 100 / MUSIC_TIME).toInt())
+
+    }
+
+
+    /** ボタン押下時に実行されるコールバック関数です **/
+    override fun onClick(p0: View) {
+
+
+        if (p0.id == R.id.back) {
+          //backボタン押下時
+            finish()
+
+        } else if (p0.id == R.id.playButton) {
+            //再生ボタン押下時
+
+            if (isPlay) {
+                stopMusic()
+
+            } else {
+
+                if (havePlayed) {
+
+                    resumeMusic()
+
+                } else {
+
+                    playMusic()
+
+                }
+
+
+            }
+        }
+
+    }
 }

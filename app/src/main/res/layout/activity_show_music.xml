@@ -66,7 +66,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:divider="@null"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="dummy"
+                        android:visibility="invisible" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -75,11 +88,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@drawable/music_box"
                 android:layout_margin="16dp"
+                android:background="@drawable/music_box"
+                android:elevation="10dp"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:elevation="10dp">
+                android:paddingRight="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,8 +126,8 @@
                                 android:gravity="center_vertical"
                                 android:paddingLeft="16dp"
                                 android:text="test"
-                                android:textSize="12sp"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/music_playing"
@@ -124,8 +137,8 @@
                                 android:gravity="center_vertical"
                                 android:paddingLeft="16dp"
                                 android:text="test"
-                                android:textSize="12dp"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
 
                         </LinearLayout>
 
@@ -143,7 +156,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray"/>
+                        android:background="@color/gray" />
 
 
                 </LinearLayout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    tools:context=".ShowResultForAge">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--タイトルバー-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/titlebar_height"
+                android:layout_marginBottom="@dimen/padding"
+                android:background="@color/secondary"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <!--タイトルバーの文字-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/titlebar_height"
+                        android:gravity="center"
+                        android:text="年齢の推論結果"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/titlebar_font_size" />
+
+                    <!--戻る矢印-->
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="6dp"
+                        android:src="@drawable/arrows" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="あなたの推定年齢は・・・"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+
+                <ImageView
+                    android:id="@+id/faceImg"
+                    android:layout_width="250dp"
+                    android:layout_height= "250dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="25"
+                    android:layout_marginTop="16dp"
+                    android:textSize="30dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="歳と判定されました。"
+                    android:layout_marginTop="16dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|bottom"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding"
+                android:paddingBottom="@dimen/padding">
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/shape_rounded_corners"
+                    android:foreground="?android:selectableItemBackground"
+                    android:text="NEXT"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/overlay"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

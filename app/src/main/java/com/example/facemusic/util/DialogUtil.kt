@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import com.example.facemusic.ShowResultForAge
 
 
 /** ポップアップ画面を表示するクラスです */
@@ -53,6 +54,22 @@ class DialogUtil {
 
     /** ダイアログを表示させた後、アプリケーションを終了する関数です */
     fun showCloseMessage (message: String, buttonMessage: String, context: Context, listener: OnClickButton) {
+
+        val builder = AlertDialog.Builder(context)
+
+        builder.setMessage(message).setPositiveButton(buttonMessage, DialogInterface.OnClickListener { dialog, id ->
+            //ボタンを押下した際の処理
+
+        })
+
+        //ポップアップ画面を表示します
+        builder.show()
+
+    }
+
+
+    /** ダイアログを表示させ、エラーが発生したことを表示する関数です **/
+    fun showErrorMessage (message: String, buttonMessage: String, context: Context, listener: ShowResultForAge) {
 
         val builder = AlertDialog.Builder(context)
 

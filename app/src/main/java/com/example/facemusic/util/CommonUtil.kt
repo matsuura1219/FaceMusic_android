@@ -86,7 +86,15 @@ class CommonUtil {
         }
 
 
-        /** DrawableをBitmapに */
+        /** トリミングを行う関数です */
+
+        fun trimingPhoto (photo: Bitmap, top: Int, left: Int, width: Int, height: Int): Bitmap {
+
+            val croppedPhoto: Bitmap = Bitmap.createBitmap(photo, left, top, width, height)
+
+            return croppedPhoto
+
+        }
     }
 
 }

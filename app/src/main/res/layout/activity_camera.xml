@@ -30,6 +30,7 @@
 
                     <!--タイトルバーの文字-->
                     <TextView
+                        android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/titlebar_height"
                         android:gravity="center"
@@ -160,6 +161,7 @@
                                 android:paddingRight="8dp">
 
                                 <TextView
+                                    android:id="@+id/step2_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="8dp"
@@ -168,6 +170,7 @@
                                     android:textSize="16sp" />
 
                                 <TextView
+                                    android:id="@+id/step2_message"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="AIを活用し、撮影画像から感情を取得します。"

@@ -15,6 +15,7 @@ class EC2ServerComm {
 
     /** 定数 **/
     private val EMOTION_URL = "http://18.179.205.80:8080/FaceMusic-Server/EmotionsApi"
+    private val AGE_URL = "http://18.179.205.80:8080/FaceMusic-Server/AgeApi"
 
     /** 変数 **/
 
@@ -30,8 +31,54 @@ class EC2ServerComm {
         //インスタンス化
         val client = OkHttpClient()
 
-        var url =
+        var emotionUrl =
             "$EMOTION_URL?anger=$anger&contempt=$contempt&disgust=$disgust&fear=$fear&happiness=$happiness&neutral=$neutral&sadness=$sadness&surprise=$surprise"
+
+        val request: Request = Request.Builder().url(emotionUrl).build()
+
+        //GET通信を行います
+        client.newCall(request).enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                //ネットワークにつながっていない際に呼ばれます
+                Log.d("debug", "onFailure")
+
+                //呼び出し元Activityに通知します
+                listener.onFailure()
+
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                //レスポンスが返却された際に呼ばれます
+                Log.d("debug", "onSuccess")
+
+                //ステータスコード
+                val statusCode: Int = response.code
+                //json文字列
+                val jsonStr = response.body?.string()
+
+                if (statusCode == Integer.parseInt(Exconst.STATUS_CODE_NORMAL)) {
+
+                    //呼び出し元Activityに通知します
+                    listener.onSuccess(jsonStr)
+
+                } else {
+
+                    //呼び出し元Activityに通知します
+                    listener.onFailure()
+                }
+
+            }
+        })
+    }
+
+    fun getMusicForAges (age: Float, gender: String?, listener: EC2ServerListener) {
+
+        //インスタンス化
+        val client = OkHttpClient()
+
+        var url =
+            "$AGE_URL?age=$age&gender=$gender"
 
         val request: Request = Request.Builder().url(url).build()
 
@@ -69,6 +116,7 @@ class EC2ServerComm {
 
             }
         })
+
     }
 
 }

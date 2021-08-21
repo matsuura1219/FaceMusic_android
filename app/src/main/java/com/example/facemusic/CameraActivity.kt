@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.facemusic.`interface`.FaceApiListener
 import com.example.facemusic.`interface`.UpLoadObjectListener
+import com.example.facemusic.application.MainApplication
 import com.example.facemusic.const.Exconst
 import com.example.facemusic.util.FaceApiUtil
 import com.example.facemusic.util.CommonUtil
@@ -61,6 +62,22 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
                 //カメラアプリが端末に存在しない場合
 
             }
+
+        }
+
+        if (MainApplication.getInstance().getSelectContent() == 0) {
+
+            title_text.text = "EmotionDetect"
+            step2_title.text = "感情の推論"
+            step2_message.text = "AIを活用し、撮影画像から感情を取得します。"
+
+
+
+        } else if (MainApplication.getInstance().getSelectContent() == 1) {
+
+            title_text.text = "AgeDetect"
+            step2_title.text = "年齢の推論"
+            step2_message.text = "AIを活用し、撮影画像から年齢を取得します。"
 
         }
     }
@@ -139,6 +156,9 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
                 //撮影画像をBitmap型に変換します
                 val img = it as Bitmap
 
+                //共通領域に設定します
+                MainApplication.getInstance().setPhoto(img)
+
                 //オブジェクトキー
                 fileName = CommonUtil.getRandomNumber()
 
@@ -184,7 +204,13 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
             val width: Int = faceRectangle.getInt("width")
             val height: Int = faceRectangle.getInt("height")
 
+
+
             val faceAttributes: JSONObject = json.getJSONObject("faceAttributes")
+
+            val age: Double = faceAttributes.getDouble("age")
+            val gender: String = faceAttributes.getString("gender")
+
             val emotion: JSONObject = faceAttributes.getJSONObject("emotion")
             val anger: Double = emotion.getDouble("anger")
             val contempt: Double = emotion.getDouble("contempt")
@@ -200,22 +226,40 @@ class CameraActivity : Activity(), FaceApiListener, UpLoadObjectListener {
 
             cor.launch {
 
-                //画面遷移を行います
-                val intent = Intent(this@CameraActivity, ShowResultForFaceApiActivity::class.java)
+                if (MainApplication.getInstance().getSelectContent() == 0) {
 
-                //次画面へデータを送信します
-                intent.putExtra("anger", anger.toFloat())
-                intent.putExtra("contempt", contempt.toFloat())
-                intent.putExtra("disgust", disgust.toFloat())
-                intent.putExtra("fear", fear.toFloat())
-                intent.putExtra("happiness", happiness.toFloat())
-                intent.putExtra("neutral", neutral.toFloat())
-                intent.putExtra("sadness", sadness.toFloat())
-                intent.putExtra("surprise", surprise.toFloat())
+                    //画面遷移を行います
+                    val intent = Intent(this@CameraActivity, ShowResultForFaceApiActivity::class.java)
 
-                startActivity(intent)
+                    //次画面へデータを送信します
+                    intent.putExtra("anger", anger.toFloat())
+                    intent.putExtra("contempt", contempt.toFloat())
+                    intent.putExtra("disgust", disgust.toFloat())
+                    intent.putExtra("fear", fear.toFloat())
+                    intent.putExtra("happiness", happiness.toFloat())
+                    intent.putExtra("neutral", neutral.toFloat())
+                    intent.putExtra("sadness", sadness.toFloat())
+                    intent.putExtra("surprise", surprise.toFloat())
+
+                    startActivity(intent)
+
+                } else if (MainApplication.getInstance().getSelectContent() == 1) {
+
+                    //画面遷移を行います
+                    val intent = Intent(this@CameraActivity, ShowResultForAge::class.java)
+
+                    //次画面へデータを送信します
+                    intent.putExtra("age", age.toFloat())
+                    intent.putExtra("gender", gender)
+                    intent.putExtra("top", top)
+                    intent.putExtra("left", left)
+                    intent.putExtra("width", width)
+                    intent.putExtra("height", height)
+
+                    startActivity(intent)
+                }
+
             }
-
 
 
         } else {
