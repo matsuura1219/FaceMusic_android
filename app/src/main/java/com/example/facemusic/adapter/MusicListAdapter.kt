@@ -13,8 +13,6 @@ import android.widget.TextView
 import com.example.facemusic.data.MusicListItem
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.util.CommonUtil
-import com.example.facemusic.util.FaceApiUtil
-import com.example.facemusic.util.S3Util
 import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.android.synthetic.main.list_item.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -26,12 +24,16 @@ class MusicListAdapter: ArrayAdapter<MusicViewModel> {
 
     /** 変数 */
     private var resource: Int = 0
-    private var items: List<MusicViewModel>? = null
+    private var items: ArrayList<MusicViewModel>? = null
     private var inflater: LayoutInflater? = null
 
 
-    /** コンストラクタ */
-    constructor (context: Context, resource: Int, items: List<MusicViewModel>) : super(context, resource, items) {
+    /** コンストラクタ
+     * @param context Context コンテキスト
+     * @param resource Int レイアウトファイル
+     * @param items List<MusicViewModel> ListViewに渡すオブジェクト
+     */
+    constructor (context: Context, resource: Int, items: ArrayList<MusicViewModel>) : super(context, resource, items) {
 
         this.resource = resource
         this.items = items
@@ -43,31 +45,32 @@ class MusicListAdapter: ArrayAdapter<MusicViewModel> {
 
         var view: View
 
-        //描画するviewを変数に設定します
+        // 描画するviewを変数に設定します
         if (convertView != null) {
             view = convertView
         } else {
             view = inflater!!.inflate(resource, null)
         }
 
-        //listviewのposition番目にあるitemsを変数に設定します
+        // listviewのposition番目にあるitemsを変数に設定します
         var item = items!![position]
 
-        //ジャケットを設定
+        // ジャケットを設定
         var photo: WebView = view.photo
         photo.settings.useWideViewPort = true;
         photo.settings.loadWithOverviewMode = true;
         photo.loadUrl(item.imageUrl)
 
-        //アーティスト名を設定
+        // アーティスト名を設定
         var artist = view.artist
         artist.text = item.artist
 
-        //楽曲名を設定
+        // 楽曲名を設定
         var music = view.music
         music.text = item.music
 
         return view
     }
+
 
 }

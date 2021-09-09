@@ -1,4 +1,4 @@
-package com.example.facemusic
+package com.example.facemusic.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -6,16 +6,17 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.animation.AlphaAnimation
+import com.example.facemusic.R
 import com.example.facemusic.`interface`.SpotifyAuthListener
-import com.example.facemusic.const.Exconst
+import com.example.facemusic.const.Constants
 import com.example.facemusic.util.DialogUtil
-import com.example.facemusic.util.SpotifyApiUtil
+import com.example.facemusic.service.SpotifyApiClient
 //Kotlin Android Extensionsにより、xmlのコンポーネントの初期化をする必要なく、IDを変数として扱うことができます
 import kotlinx.android.synthetic.main.activity_main.*
 
 /** オープニング画面です **/
 
-class MainActivity : Activity(), SpotifyAuthListener, DialogUtil.OnClickButton  {
+class OpeningActivity : Activity(), SpotifyAuthListener {
 
     /** 定数 **/
     //ハンドラー（UI処理をサブスレッドで実行するためのクラスです）
@@ -59,43 +60,44 @@ class MainActivity : Activity(), SpotifyAuthListener, DialogUtil.OnClickButton  
         mHandler.postDelayed(Runnable {
 
             //Spotifyアプリと接続をします
-            SpotifyApiUtil.getInstance().connectToSpotifyApp(this, this)
+            SpotifyApiClient.getInstance().connectToSpotifyApp(this, this)
 
         }, ANIMATION_TIME)
 
     }
 
-    /** Spotifyとの認証が完了した時に実行されるコールバック関数です */
+    /** Spotifyとの認証が完了した時に実行されるコールバック関数です
+     *  @param resultCode String Spotify用ステータスコード
+     */
+
     override fun onAuthenticationResponse(resultCode: String) {
 
-        if (resultCode.equals(Exconst.AUTHENTICATION_COMPLETE)) {
-            //認証に成功したとき
+        if (resultCode.equals(Constants.AUTHENTICATION_COMPLETE)) {
+            // 認証に成功したとき
 
-            //画面遷移を行います
+            // 画面遷移を行います
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
 
         } else {
 
-            if (resultCode.equals(Exconst.COULD_NOT_FIND_APP)) {
+            if (resultCode.equals(Constants.COULD_NOT_FIND_APP)) {
 
-                //アプリが未インストールの場合
-                DialogUtil.getInstance().showAlertMessageToGooglePlay("Spotifyアプリがインストールされていないため、本アプリを使用できません。Google Playにて、アプリのインストールをお願いします。", "はい", this, this)
+                // アプリが未インストールの場合
+                DialogUtil.getInstance().showMessageToGooglePlay(getString(R.string.spotify_uninstalled), getString(
+                    R.string.yes
+                ), this)
 
-            } else {
+            } else if (resultCode.equals((Constants.AUTHENTICATION_FAILED))){
 
-                //認証に失敗したとき
-                DialogUtil.getInstance().showCloseMessage("認証に失敗しました。アプリを終了します。", "はい", this, this)
+                // その他の認証エラーが発生したした場合
+                DialogUtil.getInstance().showCloseMessage(getString(R.string.spotify_onfailure), getString(
+                    R.string.yes
+                ), this)
 
             }
 
         }
-
-    }
-
-    /** ポップアップ画面が表示され、ボタンを押下した際に実行されるコールバック関数です */
-    override fun onClickPositiveButton() {
-
 
     }
 

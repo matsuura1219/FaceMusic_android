@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:orientation="vertical"
-    tools:context=".CameraActivity">
+    tools:context=".activity.CameraActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                             android:layout_height="40dp"
                             android:layout_marginBottom="16dp"
                             android:background="@drawable/shape_rounded_corners"
-                            android:text="STEP1"
+                            android:text="@string/step1"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -107,14 +107,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="8dp"
-                                    android:text="顔写真の撮影"
+                                    android:text="@string/step1_title"
                                     android:textColor="@color/white"
                                     android:textSize="16sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="NEXTボタンをクリックし、今の感情を表情にだし。撮影してください。"
+                                    android:text="@string/step1_explanation"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
 
@@ -136,7 +136,7 @@
                             android:layout_height="40dp"
                             android:layout_marginBottom="16dp"
                             android:background="@drawable/shape_rounded_corners"
-                            android:text="STEP2"
+                            android:text="@string/step2"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -165,7 +165,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="8dp"
-                                    android:text="感情の推論"
+                                    android:text="@string/step2_title_emotion_detection"
                                     android:textColor="@color/white"
                                     android:textSize="16sp" />
 
@@ -173,7 +173,7 @@
                                     android:id="@+id/step2_message"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="AIを活用し、撮影画像から感情を取得します。"
+                                    android:text="@string/step2_explanation_emotion_detection"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
 
@@ -196,7 +196,7 @@
                             android:layout_height="40dp"
                             android:layout_marginBottom="16dp"
                             android:background="@drawable/shape_rounded_corners"
-                            android:text="STEP3"
+                            android:text="@string/step3"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -224,14 +224,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="8dp"
-                                    android:text="楽曲の提案"
+                                    android:text="@string/step3_title"
                                     android:textColor="@color/white"
                                     android:textSize="16sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="取得した画像から、最適な楽曲を提案します。"
+                                    android:text="@string/step3_explanation"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
 
@@ -262,7 +262,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/shape_rounded_corners"
-                    android:text="NEXT"
+                    android:text="@string/next"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size" />
 

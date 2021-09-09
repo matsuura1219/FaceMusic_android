@@ -4,7 +4,10 @@ package com.example.facemusic.`interface`
 
 interface SpotifyAuthListener {
 
-    //認証時に実行されるコールバック関数です
+    /** 認証時に実行されるコールバック関数です
+     * @param resultCode String ステータスコード
+     */
+
     fun onAuthenticationResponse(resultCode: String)
 
 }

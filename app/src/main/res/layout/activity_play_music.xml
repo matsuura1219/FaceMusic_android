@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".ShowMusicActivity">
+    tools:context=".activity.PlayMusicActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,13 +119,16 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/rewindButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/play"
-                    android:visibility="invisible"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
+                    android:src="@drawable/rewind_button"
                     android:layout_weight="1"/>
 
                 <ImageView
+                    android:id="@+id/backButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/next"
@@ -143,7 +146,7 @@
                     android:src="@drawable/play" />
 
                 <ImageView
-
+                    android:id="@+id/skipButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/next"
@@ -152,10 +155,12 @@
                     android:layout_weight="1"/>
 
                 <ImageView
+                    android:id="@+id/forwardButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/play"
-                    android:visibility="invisible"
+                    android:src="@drawable/forward_button"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
                     android:layout_weight="1"/>
 
             </LinearLayout>

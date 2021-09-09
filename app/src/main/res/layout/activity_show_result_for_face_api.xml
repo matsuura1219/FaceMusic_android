@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowResultForFaceApiActivity"
+    tools:context=".activity.ShowResultForEmotionDetection"
     android:background="@color/primary"
     android:orientation="vertical">
 
@@ -33,7 +33,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/titlebar_height"
                         android:gravity="center"
-                        android:text="感情の推論結果"
+                        android:text="@string/title_show_result_for_emotion_detection_activity"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/titlebar_font_size" />
@@ -73,7 +73,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="anger"
+                            android:text="@string/anger"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -97,7 +97,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="comtempt"
+                            android:text="@string/contempt"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -121,7 +121,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="disgust"
+                            android:text="@string/disgust"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -146,7 +146,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="fear"
+                            android:text="@string/fear"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -169,7 +169,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="happiness"
+                            android:text="@string/happiness"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -192,7 +192,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="neutral"
+                            android:text="@string/neutral"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -215,7 +215,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="sadness"
+                            android:text="@string/sadness"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -239,7 +239,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="surprise"
+                            android:text="@string/surprise"
                             android:textSize="@dimen/subtitle"
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/margin_between_subtitle_and_view"/>
@@ -272,7 +272,7 @@
                     android:id="@+id/next"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="NEXT"
+                    android:text="@string/next"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size"
                     android:background="@drawable/shape_rounded_corners"
