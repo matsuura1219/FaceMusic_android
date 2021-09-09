@@ -5,31 +5,33 @@ import androidx.lifecycle.ViewModel
 
 class MusicViewModel: ViewModel() {
 
-    //楽曲id
+    // 楽曲id
     var id: String = ""
-    //ジャケット写真
+    // ジャケット写真
     var imageUrl: String = ""
-    //アーティスト名
+    // アーティスト名
     var artist: String = ""
-    //楽曲名
+    // 楽曲名
     var music: String = ""
-    //danceablity
+    // danceablity
     var danceability: Float = 0f
-    //energy
+    // energy
     var energy: Float = 0f
-    //loudness
+    // loudness
     var loudness: Float = 0f
-    //speechiness
+    // speechiness
     var speechiness: Float = 0f
-    //acousticness
+    // acousticness
     var acousticness: Float = 0f
-    //instrumentalness
+    // instrumentalness
     var instrumentalness: Float = 0f
-    //liveness
+    // liveness
     var liveness: Float = 0f
-    //valence
+    // valence
     var valence: Float = 0f
-    //tempo
+    // tempo
     var tempo: Float = 0f
+    // 曲の時間
+    var duration: Int = 200000
     
 }

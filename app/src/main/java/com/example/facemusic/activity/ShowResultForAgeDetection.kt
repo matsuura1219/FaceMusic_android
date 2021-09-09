@@ -1,4 +1,4 @@
-package com.example.facemusic
+package com.example.facemusic.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.View
 import com.example.facemusic.`interface`.EC2ServerListener
 import com.example.facemusic.application.MainApplication
-import com.example.facemusic.json.EmotionsAPIData
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.util.CommonUtil
 import com.example.facemusic.util.DialogUtil
-import com.example.facemusic.util.EC2ServerComm
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.android.synthetic.main.activity_show_result_for_age.*
@@ -23,7 +21,8 @@ import kotlinx.coroutines.launch
 
 /** 年齢と性別の判定結果を表示するActivityです **/
 
-class ShowResultForAge : Activity(), EC2ServerListener {
+/*
+class ShowResultForAgeDetection : Activity(), EC2ServerListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_result_for_age)
@@ -126,3 +125,4 @@ class ShowResultForAge : Activity(), EC2ServerListener {
     }
 
 }
+*/

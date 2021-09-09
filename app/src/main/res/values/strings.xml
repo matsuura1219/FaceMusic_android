@@ -1,29 +1,81 @@
 <resources>
     <string name="app_name">FaceMusic</string>
 
+    <!--共通（通常メッセージ）-->
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="retry">再試行</string>
+    <string name="close">閉じる</string>
+    <string name="next">NEXT</string>
+    <string name="emotion_detection">Emotion Detection</string>
+    <string name="age_detection">Age Detection</string>
+    <string name="anger">anger</string>
+    <string name="contempt">contempt</string>
+    <string name="fear">fear</string>
+    <string name="disgust">disgust</string>
+    <string name="happiness">happiness</string>
+    <string name="sadness">sadness</string>
+    <string name="neutral">neutral</string>
+    <string name="surprise">surprise</string>
+
+    <!--共通（エラーメッセージ）-->
+    <string name="not_connect_network">通信状態に問題があります。再度カメラ撮影を行ってください。</string>
+    <string name="not_connect_network_ec2">通信状態に問題があります。ネットワーク状態の確認をしてください。</string>
+
+    <!--タイトル（HomeActivity）-->
     <string name="title_home_activity">"FACE MUSIC</string>
     <!--タイトル(CameraActivity)-->
     <string name="title_camera_activity">アプリの説明</string>
-    <!--タイトル(ShowResultForFaceApiActivity)-->
-    <string name="title_show_result_for_face_api_activity">画像処理の結果</string>
+    <!--タイトル(ShowResultForEmotionDetection)-->
+    <string name="title_show_result_for_emotion_detection_activity">表情の推論結果</string>
+    <!--タイトル(ShowResultForAgeDetection)-->
+    <string name="title_show_result_for_age_detection_activity">年齢の推論結果</string>
     <!--タイトル(ShowMusicActivity)-->
     <string name="title_show_music_activity">提案された楽曲一覧</string>
     <!--タイトル(PlayMusicActivity)-->
     <string name="title_play_music_activity">楽曲再生</string>
 
-    <!--STEP(CameraActivity)-->
+    <!--OpeningActivity-->
+    <!--通常メッセージ-->
+    <string name="emotion_detection_message">あなたの感情に合わせた楽曲を</string>
+    <string name="age_detection_message">あなたの世代に合わせた楽曲を</string>
+    <!--エラーメッセージ-->
+    <string name="spotify_uninstalled">Spotifyアプリがインストールされていないため、本アプリを使用できません。Google Playにて、アプリのインストールをお願いします。</string>
+    <string name="spotify_onfailure">Spotifyアプリの認証に失敗しました。アプリを終了します。</string>
+    <string name="google_play_guard">Google Storeアプリが無効になっているため、アプリを終了します</string>
+
+    <!--CameraActivity-->
+
+    <!--通常メッセージ-->
     <string name="step1"><i>STEP01</i></string>
     <string name="step2"><i>STEP02</i></string>
     <string name="step3"><i>STEP03</i></string>
-
     <string name="step1_title">顔写真の撮影</string>
     <string name="step1_explanation">NEXTボタンを押下すると、カメラが起動します。今の感情を表情にだし、撮影してください。</string>
-
-    <string name="step2_title">感情の推論</string>
-    <string name="step2_explanation">撮影画像を送信すると、AIにより、感情を取得します。</string>
-
+    <string name="step2_title_emotion_detection">感情の推論</string>
+    <string name="step2_explanation_emotion_detection">撮影画像を送信すると、AIにより、感情を取得します。</string>
+    <string name="step2_title_age_detection">年齢の推論</string>
+    <string name="step2_explanation_age_detection">撮影画像を送信すると、AIにより、年齢を取得します。</string>
     <string name="step3_title">最適な楽曲の提案</string>
     <string name="step3_explanation">取得した感情から、最適な楽曲を提案し、音楽の視聴ができます。</string>
+
+    <!--エラーメッセージ-->
+    <string name="camera_no_permission">カメラ権限が許可されていません。設定アプリで権限を変更してください。</string>
+    <string name="s3_not_uploaded">撮影画像の処理中にエラーが発生しました。再度撮影を行ってください。</string>
+    <string name="faceapi_not_work">撮影画像に不備があります。自身の顔のみを再撮影してください。</string>
+    <string name="faceapi_non_people">撮影画像に顔画像が検出されませんでした。自身の顔のみを再撮影してください。</string>
+    <string name="faceapi_many_people">撮影画像に2名以上の顔画像が存在します。自身の顔のみを再撮影してください。</string>
+
+    <!--ShowResultForDemotionDetection-->
+
+    <!--ShowMusicActivity-->
+
+    <!--エラーメッセージ-->
+    <string name="snackbar_error_message">通信状況をご確認ください。</string>
+
+    <!--PlayMusicActivity-->
+    <!--エラーメッセージ-->
+    <string name="cannot_play_music">選択した曲は再生できませんでした。</string>
 
 
 </resources>

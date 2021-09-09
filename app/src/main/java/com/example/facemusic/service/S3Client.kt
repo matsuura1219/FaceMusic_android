@@ -1,4 +1,4 @@
-package com.example.facemusic.util
+package com.example.facemusic.service
 
 import android.content.Context
 import com.amazonaws.AmazonClientException
@@ -16,36 +16,39 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model.DeleteObjectRequest
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.example.facemusic.`interface`.UpLoadObjectListener
-import com.example.facemusic.const.Exconst
+import com.example.facemusic.`interface`.S3UpLoadObjectListener
+import com.example.facemusic.const.Constants
 import java.io.File
 import java.util.*
 
 
 /** Amazon S3に画像をアップロードするクラスです **/
 
-class S3Util : TransferListener {
+class S3Client : TransferListener {
 
     /** 変数 **/
-    private var _listener: UpLoadObjectListener? = null
+    // S3へのアップロード後のリスナー
+    private var listener: S3UpLoadObjectListener? = null
 
-    /** 定数（Face AWS） **/
-
-    //アクセスキーID
-    private val accessKeyId = "AKIAT7N5KMTBE2HYX6T4"
-
-    //シークレットアクセスキー
-    private val secretAccessKey = "GcKWIdHPeFiga1X2W1/ajfYq5c6G2CKXr9Rt9L2L"
-
+    /** 定数　**/
+    // アクセスキーID
+    private val ACCESS_KEY_ID = "AKIAT7N5KMTBE2HYX6T4"
+    //　シークレットアクセスキー
+    private val SECRET_ACCESS_KEY = "GcKWIdHPeFiga1X2W1/ajfYq5c6G2CKXr9Rt9L2L"
     //バケット名
-    private val bucketName = "face-music-app"
+    private val BUCKET_NAME = "face-music-app"
+    // オブジェクトへの有効期限
+    private val EXPIRATION_DURATION = 1000000
 
 
-    //static領域（シングルトン）
+    /** シングルトン **/
+
     companion object {
 
-        private val _instance: S3Util = S3Util()
-        fun getInstance(): S3Util = _instance
+        private val _instance: S3Client =
+            S3Client()
+        fun getInstance(): S3Client =
+            _instance
 
     }
 
@@ -54,35 +57,30 @@ class S3Util : TransferListener {
      * 画像をアップロードする関数です
      * @param context Context コンテキスト
      * @param file File 画像ファイル
-     * @param listener UploadObjectListener インターフェイス
-     * */
-    fun uploadImage(
-        context: Context,
-        file: File,
-        fileName: String,
-        listener: UpLoadObjectListener
-    ) {
+     * @param listener S3UploadObjectListener インターフェイス
+     */
 
-        _listener = listener
+    fun uploadImage(context: Context, file: File, fileName: String, listener: S3UpLoadObjectListener) {
+
+        this.listener = listener
 
         val transferUtitlity: TransferUtility =
             TransferUtility.builder().s3Client(createS3Client()).context(context).build()
 
-        val transferObserver: TransferObserver = transferUtitlity.upload(bucketName, fileName, file)
+        val transferObserver: TransferObserver = transferUtitlity.upload(BUCKET_NAME, fileName, file)
 
         transferObserver.setTransferListener(this)
 
     }
 
-    /**
-     * S3クライアントを作成する関数です
-     * */
+    /** S3クライアントを作成する関数です **/
+
     private fun createS3Client(): AmazonS3 {
 
-        //AWSの認証情報を作成します
-        val credentials: AWSCredentials = BasicAWSCredentials(accessKeyId, secretAccessKey)
+        // AWSの認証情報を作成します
+        val credentials: AWSCredentials = BasicAWSCredentials(ACCESS_KEY_ID, SECRET_ACCESS_KEY)
 
-        //S3のクライアントを生成します
+        // S3のクライアントを生成します
         val client: AmazonS3 = AmazonS3Client(credentials, Region.getRegion(Regions.AP_NORTHEAST_1))
 
         return client
@@ -93,33 +91,40 @@ class S3Util : TransferListener {
     /**
      * バケット内に指定のディレクトリが存在するかをチェックする関数です
      * @param key String オブジェクトキー
-     * */
+     */
+
     fun existDirectory(key: String): Boolean {
 
-        var flag: Boolean = false
+        // オブジェクトが存在しているかを判定するフラグです
+        var exsitObject: Boolean = false
 
         try {
-            flag = createS3Client().doesObjectExist(bucketName, key)
+            // 指定のオブジェクトが存在するかどうかを判定します
+            exsitObject = createS3Client().doesObjectExist(BUCKET_NAME, key)
+
         } catch (ase: AmazonServiceException) {
-            //リクエスト処理中にエラーが発生した際に呼ばれます
-            flag = false
+            // リクエスト処理中にエラーが発生した際に呼ばれます
+            exsitObject = false
+
         } catch (ace: AmazonClientException) {
             //リクエストをする際、もしくはレスポンスを処理している場合に、クライアント側でエラーが発生した際に呼ばれます
-            flag = false
+            exsitObject = false
         }
 
-        return flag
+        return exsitObject
     }
 
 
     /**
      * 指定した画像ファイルを削除する関数です
      * @param key String オブジェクトキー
-     * */
+     */
+
     fun deleteObject(key: String) {
 
         try {
-            val dor = DeleteObjectRequest(bucketName, key)
+            // 指定のオブジェクトを削除します
+            val dor = DeleteObjectRequest(BUCKET_NAME, key)
             createS3Client().deleteObject(dor)
         } catch (ase: AmazonServiceException) {
             //リクエスト処理中にエラーが発生した際に呼ばれます
@@ -133,7 +138,8 @@ class S3Util : TransferListener {
     /**
      * 署名付きオブジェクトURLを生成する関数です
      * @param key String オブジェクトキー
-     * */
+     */
+
     fun createObjectUrl(key: String): String {
 
         //署名つきオブジェクトURL
@@ -144,14 +150,13 @@ class S3Util : TransferListener {
             var expTimeMillis = expiration.time
 
             //有効期限を設定します
-            expTimeMillis += 1000 * 60 * 60
+            expTimeMillis += EXPIRATION_DURATION
             expiration.time = expTimeMillis
 
             //指定のオブジェクトをGETする署名付きURLを設定を設定します
             val generatePresignedUrlRequest =
-                GeneratePresignedUrlRequest(bucketName, key).withMethod(HttpMethod.GET)
+                GeneratePresignedUrlRequest(BUCKET_NAME, key).withMethod(HttpMethod.GET)
                     .withExpiration(expiration)
-
 
             val url = createS3Client().generatePresignedUrl(generatePresignedUrlRequest)
 
@@ -166,7 +171,6 @@ class S3Util : TransferListener {
 
         return presignedUrl
 
-
     }
 
     /**
@@ -174,7 +178,8 @@ class S3Util : TransferListener {
      * @param id Int 送信した際の固有のID
      * @param bytesCurrent Long 現在送信されたバイト数
      * @param bytesTotal Long 送信されるべき合計のバイト数
-     * */
+     */
+
     override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
         //特にコーディングする必要なし
     }
@@ -188,11 +193,11 @@ class S3Util : TransferListener {
 
         if (state == TransferState.COMPLETED) {
             //送信が完了した場合
-            _listener?.onUploaded(Exconst.UPLOADED_COMPLETE, null)
+            listener?.onS3Uploaded(Constants.UPLOADED_COMPLETE, null)
 
         } else if (state == TransferState.FAILED) {
             //送信が失敗した場合
-            _listener?.onUploaded(Exconst.UPLOADED_FAILED, null)
+            listener?.onS3Uploaded(Constants.UPLOADED_FAILED, null)
 
         }
 
@@ -205,9 +210,8 @@ class S3Util : TransferListener {
      * */
     override fun onError(id: Int, ex: Exception?) {
 
-        _listener?.onUploaded(Exconst.UPLOADED_FAILED, ex)
+        listener?.onS3Uploaded(Constants.UPLOADED_FAILED, ex)
 
     }
-
 
 }

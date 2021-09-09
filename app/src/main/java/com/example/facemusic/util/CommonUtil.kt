@@ -1,5 +1,6 @@
 package com.example.facemusic.util
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -20,6 +21,15 @@ class CommonUtil {
 
     //static領域
     companion object {
+
+
+        /** アプリを強制終了する関数です **/
+
+        fun finishApp (activity: Activity) {
+
+            activity.finishAndRemoveTask()
+
+        }
 
         /** Bitmap型をFile型に変更する関数です **/
 
