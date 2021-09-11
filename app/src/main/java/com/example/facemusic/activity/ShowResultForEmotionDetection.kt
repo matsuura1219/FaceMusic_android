@@ -222,6 +222,8 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
             viewModel.speechiness = list.speechiness
             viewModel.tempo = list.tempo
             viewModel.valence = list.valence
+            viewModel.durationTime = list.durationTime
+            viewModel.releaseDay = list.releaseDay
 
             viewModels.add(viewModel)
 

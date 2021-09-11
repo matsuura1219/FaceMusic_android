@@ -349,10 +349,9 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
                     // [AgeDetection]を選択した場合
 
                     //画面遷移を行います
-                    /*
                     val intent = Intent(this@CameraActivity, ShowResultForAgeDetection::class.java)
                     startActivity(intent)
-                    */
+
 
                 }
 

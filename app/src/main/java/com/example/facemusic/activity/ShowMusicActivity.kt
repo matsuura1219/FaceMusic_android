@@ -21,13 +21,13 @@ import com.example.facemusic.data.MusicListItem
 import com.example.facemusic.data.UserInfo
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.service.EC2Client
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_show_music.*
 import kotlinx.android.synthetic.main.activity_show_music.back
 import kotlinx.android.synthetic.main.activity_show_result_for_face_api.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.google.android.material.snackbar.Snackbar;
 import kotlinx.android.synthetic.main.activity_play_music.*
 
 

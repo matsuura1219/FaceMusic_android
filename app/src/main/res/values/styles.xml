@@ -4,9 +4,23 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
-        <!--ステータスバーの色に適用される属性はcolorPrimaryDarkのためここを表示したい色に変更します-->
+        <!-- ステータスバーの色に適用される属性はcolorPrimaryDarkのためここを表示したい色に変更します -->
         <item name="colorPrimaryDark">@color/secondary</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- チェックボックスのスタイル -->
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <!-- 枠線 -->
+        <item name="colorControlNormal">@color/secondary</item>
+        <!-- チェック時の色 -->
+        <item name="colorControlActivated">@color/secondary</item>
+    </style>
+
+    <!-- NumberPickerのスタイル -->
+    <style name="MyNumberPicker" parent="Theme.AppCompat.Light">
+        <!-- 線 -->
+        <item name="colorControlNormal">@color/secondary</item>
     </style>
 
 </resources>

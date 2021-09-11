@@ -4,9 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.CheckBox
+import android.widget.NumberPicker
+import com.example.facemusic.R
 import com.example.facemusic.`interface`.EC2ServerListener
 import com.example.facemusic.application.MainApplication
+import com.example.facemusic.json.EmotionsApiData
 import com.example.facemusic.model.MusicViewModel
+import com.example.facemusic.service.EC2Client
 import com.example.facemusic.util.CommonUtil
 import com.example.facemusic.util.DialogUtil
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -15,59 +20,138 @@ import kotlinx.android.synthetic.main.activity_show_result_for_age.*
 import kotlinx.android.synthetic.main.activity_show_result_for_age.back
 import kotlinx.android.synthetic.main.activity_show_result_for_age.next
 import kotlinx.android.synthetic.main.activity_show_result_for_age.overlay
+import kotlinx.android.synthetic.main.activity_show_result_for_face_api.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.reflect.jvm.internal.impl.util.Check
 
-/** 年齢と性別の判定結果を表示するActivityです **/
+/** 年齢の判定結果を表示するActivityです **/
 
-/*
-class ShowResultForAgeDetection : Activity(), EC2ServerListener {
+class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker.OnValueChangeListener, EC2ServerListener {
+
+    /** 定数 **/
+    private val MIN_AGE: Int = 0
+    private val MAX_AGE: Int = 100
+    private val STANDARD_AGE = 25
+
+    /** 変数 **/
+    private var selectedAge: Int = 20
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_result_for_age)
 
-        //戻るアイコンを押下したときのイベントを設定します
-        back.setOnClickListener {
-            //現在のActivityを閉じ、前画面に戻ります
+        //Viewの初期化を行います
+        initComponents()
+
+        // 初期化を行います
+        init()
+
+    }
+
+
+    /** Viewの初期化を行う関数です **/
+    private fun initComponents () {
+
+        // 0～100までをループさせる設定にします
+        picker.wrapSelectorWheel = true
+        // pickerの最大値・最小値を設定します
+        picker.maxValue = MAX_AGE
+        picker.minValue = MIN_AGE
+        // 表示する値を設定します
+        picker.value = MainApplication.getInstance().getUserInfo().getFaceApiData()?.faceAttributes?.age?.toInt() ?: STANDARD_AGE
+        // 非表示にします
+        picker.visibility = View.INVISIBLE
+
+        // checkboxの初期表示を設定します
+        checkbox.isChecked = false
+
+        // 推定年齢を表示します
+        age.text = MainApplication.getInstance().getUserInfo().getFaceApiData()?.faceAttributes?.age?.toInt()
+            .toString()
+
+    }
+
+    /** 初期化を行う関数です **/
+    private fun init () {
+
+        // リスナーを設定します
+        back.setOnClickListener(this)
+        next.setOnClickListener(this)
+        picker.setOnValueChangedListener(this)
+        checkbox.setOnClickListener(this)
+    }
+
+
+
+    /** ボタンクリック時に実行されるコールバック関数です **/
+    override fun onClick(v: View) {
+
+        if (v.id == R.id.back) {
+            // 戻るボタンを押下した場合
             finish()
-        }
+        } else if (v.id == R.id.next) {
+            // NEXTボタンを押下した場合
 
-        //遷移元の値を受け取ります
-        //前画面から感情データを受け取ります
-        val intent = intent
-        val age_data: Float = intent.getFloatExtra("age", 0.0f)
-        val gender_data: String? = intent.getStringExtra("gender")
-        val top_data: Int = intent.getIntExtra("top", 0)
-        val left_data: Int = intent.getIntExtra("left", 0)
-        val width_data: Int = intent.getIntExtra("width", 0)
-        val height_data: Int = intent.getIntExtra("height", 0)
-
-        var photo = CommonUtil.trimingPhoto(MainApplication.getInstance().getPhoto()!!, top_data, left_data, width_data, height_data)
-
-        faceImg.setImageBitmap(photo)
-        age.text = age_data.toString()
-
-        next.setOnClickListener {
-
+            // オーバーレイを表示します
             overlay.visibility = View.VISIBLE
 
-            //EC2インスタンスEmotionsAPIを呼び出します
-            EC2ServerComm.getInstance().getMusicForAges(age_data, gender_data, this)
+            // WebAPIをコールします
 
+            var age: String = ""
+
+            if (checkbox.isChecked) {
+                // チェックがついている場合
+                // 年齢はpickerに表示している値に設定します
+                age = selectedAge.toString()
+
+            } else {
+                // チェックがついていない場合
+                // 年齢は共通領域を設定します
+                age = MainApplication.getInstance().getUserInfo().getFaceApiData()?.faceAttributes?.age?.toInt().toString()
+
+            }
+
+            EC2Client.getInstance().getMusicForAge(age, 10, 20,this)
+
+
+        } else if (v.id == R.id.checkbox) {
+            // チェックボックスを押下した場合
+
+            if (checkbox.isChecked) {
+                // チェックをつけた場合
+                // pickerを表示します
+                picker.visibility = View.VISIBLE
+            } else {
+                // チェックを外した場合
+                picker.visibility = View.INVISIBLE
+
+            }
         }
 
     }
 
+    /** pickerに表示されている値が変わった後に実行されるコールバック関数です
+     * @param picker NumberPicker? picker
+     * @param oldVal Int 切り替わる前の値
+     * @param newVal Int 切り替わった後の値
+     */
+    override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
+        selectedAge = newVal
+    }
+
+    /** EC2インスタンスとの通信に成功し、jsonデータを正常に取得できた場合に実行されるコールバック関数です
+     * @param data String 減却されたjsonデータ
+     */
     override fun onSuccess(data: String?) {
 
-        //jsonデータをパースします
+        // jsonデータをパースします
         val mapper = jacksonObjectMapper()
-        val jsonData = mapper.readValue<ArrayList<EmotionsAPIData>>(data!!)
+        val jsonData = mapper.readValue<ArrayList<EmotionsApiData>>(data!!)
 
-        //val test = jsonData.get(0).loudness
+        // 共通領域に値を設定します
 
-        //共通領域に値を設定します
         val model = listToViewModel(jsonData)
         val myApp: MainApplication = MainApplication.getInstance()
         myApp.setMusicViewModel(model)
@@ -77,19 +161,26 @@ class ShowResultForAgeDetection : Activity(), EC2ServerListener {
 
         coroutine.launch {
 
-            //オーバーレイを解除します
+            // オーバーレイを解除します
             overlay.visibility = View.INVISIBLE
 
-            //画面遷移を行います
-            val intent = Intent(this@ShowResultForAge, ShowMusicActivity::class.java)
+            // 画面遷移を行います
+            val intent = Intent(this@ShowResultForAgeDetection, ShowMusicActivity::class.java)
             startActivity(intent)
 
         }
 
     }
 
-    /** 配列をViewmodelに変換する関数です **/
-    private fun listToViewModel (lists: ArrayList<EmotionsAPIData>): ArrayList<MusicViewModel> {
+    /** EC2インスタンスとの通信に失敗した場合に実行されるコールバック関数です **/
+    override fun onFailure() {
+
+    }
+
+    /** dataクラスの配列をViewmodelの配列に変換する関数です
+     * @param lists ArrayList<EmotionsApiData> APIで取得したデータの配列
+     */
+    private fun listToViewModel (lists: ArrayList<EmotionsApiData>): ArrayList<MusicViewModel> {
 
         var viewModels: ArrayList<MusicViewModel> = ArrayList(lists.size)
 
@@ -116,13 +207,5 @@ class ShowResultForAgeDetection : Activity(), EC2ServerListener {
         return viewModels
     }
 
-    override fun onFailure() {
-
-        DialogUtil.getInstance().showErrorMessage("通信に失敗しました", "はい", this, this)
-
-
-
-    }
 
 }
-*/

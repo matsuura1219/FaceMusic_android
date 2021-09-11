@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:orientation="vertical"
-    tools:context=".ShowResultForAge">
+    tools:context=".activity.ShowResultForAgeDetection">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -62,17 +62,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="あなたの推定年齢は・・・"
+                    android:text="あなたの推定年齢は、"
+                    android:gravity="center"
                     android:textColor="@color/white"
+                    android:layout_marginTop="16dp"
                     android:textSize="16dp" />
 
 
-                <ImageView
-                    android:id="@+id/faceImg"
-                    android:layout_width="250dp"
-                    android:layout_height= "250dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_gravity="center"/>
 
                 <TextView
                     android:id="@+id/age"
@@ -92,6 +88,37 @@
                     android:textSize="16dp"
                     android:textColor="@color/white"
                     android:gravity="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="この世代の楽曲をレコメンドします。"
+                    android:layout_marginTop="30dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+
+
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="推定年齢を変更しますか？"
+                    android:theme="@style/MyCheckBox"
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"/>
+
+
+                <com.example.facemusic.view.MyNumberPicker
+                    android:id="@+id/picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/MyNumberPicker"
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center"/>
+
 
 
             </LinearLayout>

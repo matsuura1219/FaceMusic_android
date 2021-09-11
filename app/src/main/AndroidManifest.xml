@@ -24,6 +24,7 @@
 
         <activity android:name=".activity.PlayMusicActivity" />
         <activity android:name=".activity.ShowResultForEmotionDetection" />
+        <activity android:name=".activity.ShowResultForAgeDetection" />
         <activity android:name=".activity.ShowMusicActivity" />
         <activity android:name=".activity.CameraActivity" />
         <activity android:name=".activity.HomeActivity" />
@@ -34,6 +35,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        <activity android:name=".activity.ShowResultForAgeDetection">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
     </application>
 
 </manifest>

@@ -13,9 +13,9 @@ class EC2Client {
     /** 定数 **/
 
     // サーバのURL
-    private val SERVER_URL: String = "http://18.179.205.80:8080/FaceMusic-Server"
-    //EmotionDetectionのパス
-    private val EMOTION_URL = "/EmotionsApi"
+    private val SERVER_URL: String = "http://18.179.205.80:8080/FaceMusicApi"
+    // EmotionDetectionのパス
+    private val EMOTION_URL = "/EmotionApi"
     // AgeDetectionのパス
     private val AGE_URL = "/AgeApi"
 
@@ -48,7 +48,7 @@ class EC2Client {
         val client = OkHttpClient()
 
         var emotionUrl =
-            "$SERVER_URL$EMOTION_URL?anger=$anger&contempt=$contempt&disgust=$disgust&fear=$fear&happiness=$happiness&neutral=$neutral&sadness=$sadness&surprise=$surprise"
+            "$SERVER_URL$EMOTION_URL?anger=$anger&contempt=$contempt&disgust=$disgust&fear=$fear&happiness=$happiness&neutral=$neutral&sadness=$sadness&surprise=$surprise&from=$from&to=$to"
 
         val request: Request = Request.Builder().url(emotionUrl).build()
 
@@ -86,13 +86,20 @@ class EC2Client {
         })
     }
 
-    fun getMusicForAges (age: Float, gender: String?, listener: EC2ServerListener) {
+
+    /** 年齢データを送信し、最適な楽曲を取得する関数です (GET)
+     * @param age String 年齢
+     * @param from Int DB検索のスタート行
+     * @param to Int DB検索のファイナル行
+     * @param listener EC2ServerListener EC2からのレスポンスのリスナー
+     */
+    fun getMusicForAge (age: String, from: Int, to: Int, listener: EC2ServerListener) {
 
         //インスタンス化
         val client = OkHttpClient()
 
         var url =
-            "$AGE_URL?age=$age&gender=$gender"
+            "$SERVER_URL$AGE_URL?age=$age&from=$from&to=$to"
 
         val request: Request = Request.Builder().url(url).build()
 

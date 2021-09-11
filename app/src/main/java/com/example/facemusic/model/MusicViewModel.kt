@@ -32,6 +32,8 @@ class MusicViewModel: ViewModel() {
     // tempo
     var tempo: Float = 0f
     // 曲の時間
-    var duration: Int = 200000
+    var durationTime: Int = 0
+    // リリース日
+    var releaseDay: String = ""
     
 }

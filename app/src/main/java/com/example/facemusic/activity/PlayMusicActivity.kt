@@ -65,7 +65,7 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener,
         init()
 
         // 再生時間を設定します
-        duration = data.duration.toLong()
+        duration = data.durationTime.toLong()
 
         // Viewの初期化処理を行います
         initComponent()
@@ -347,7 +347,7 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener,
         var changeMusicPosition: Int = p0!!.progress - positionBeforeDrag
         // 曲の位置を変更します
         SpotifyApiClient.getInstance()
-            .changeMusicPosition(changeMusicPosition.toLong() * data.duration / 100)
+            .changeMusicPosition(changeMusicPosition.toLong() * data.durationTime / 100)
         // seekBarの位置を自動で変更します
         changeSeekBarPosition(seekBar.progress)
 
@@ -356,7 +356,7 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener,
     /** 曲の再生位置を取得したのちに実行されるコールバック関数です **/
     override fun getCurrentMusicPosition(position: Long) {
 
-        changeSeekBarPosition((position * 100 / data.duration).toInt())
+        changeSeekBarPosition((position * 100 / data.durationTime).toInt())
 
     }
 
