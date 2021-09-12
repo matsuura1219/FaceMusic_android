@@ -7,14 +7,11 @@
     <color name="colorAccent">#03DAC5</color>
 
     <!--カスタム-->
-<!--    <color name="primary">#152662</color>-->
-    <color name="primary">#F0EEEF</color>
-    <color name="secondary">#262E77</color>
+    <color name="primary">#242424</color>
+    <color name="secondary">#BF1E56</color>
     <color name="white">#ffffff</color>
     <color name="black">#242424</color>
-
-
-
+    <color name="gray">#cccccc</color>
 
     <!--オーバーレイ表示-->
     <color name="overlay">#66ffffff</color>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".HomeActivity">
+    tools:context=".activity.HomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,93 +16,269 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/titlebar_height"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/padding">
+            android:background="@color/secondary"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/titlebar_height"
-                android:textAlignment="center"
                 android:gravity="center"
-                android:textColor="@color/black"
                 android:text="@string/title_home_activity"
-                android:textSize="@dimen/titlebar_font_size"/>
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/titlebar_font_size" />
         </LinearLayout>
+
 
         <!--メインコンテンツ-->
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp"
+            android:paddingLeft="@dimen/padding"
+            android:paddingRight="@dimen/padding">
+
+            <!-- Emotion Detection -->
 
             <LinearLayout
+                android:id="@+id/emotionDetection"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/padding"
-                android:paddingRight="@dimen/padding">
+                android:layout_height="120dp"
+                android:background="@drawable/cardview_frame_secondary">
 
-                <!--感情を撮影画像から取得し、最適な楽曲を提案するコンテンツです-->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/recommendMusicForAi"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/cardview_height"
-                    android:background="@color/white"
-                    android:elevation="@dimen/cardview_z"
-                    card_view:cardCornerRadius="@dimen/cardview_radius"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:padding="16dp"
+                        android:src="@drawable/noimage" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/emotion_detection"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/emotion_detection_message"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
 
                     </LinearLayout>
 
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/cardview_height"
-                    android:background="@color/white"
-                    android:elevation="@dimen/cardview_z"
-                    android:layout_marginTop="@dimen/padding"
-                    card_view:cardCornerRadius="@dimen/cardview_radius">
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/cardview_height"
-                    android:background="@color/white"
-                    android:elevation="@dimen/cardview_z"
-                    android:layout_marginTop="@dimen/padding"
-                    card_view:cardCornerRadius="@dimen/cardview_radius">
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/cardview_height"
-                    android:background="@color/white"
-                    android:elevation="@dimen/cardview_z"
-                    android:layout_marginBottom="@dimen/padding"
-                    android:layout_marginTop="@dimen/padding"
-                    card_view:cardCornerRadius="@dimen/cardview_radius">
-                </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
             </LinearLayout>
 
-        </ScrollView>
+
+            <!-- Age Detection -->
+            <LinearLayout
+                android:id="@+id/ageDetection"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/cardview_frame_secondary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.7"
+                        android:padding="16dp"
+                        android:src="@drawable/noimage" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/age_detection"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="@string/age_detection_message"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <!--メインコンテンツ(β版)-->
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:paddingLeft="@dimen/padding"-->
+        <!--            android:paddingRight="@dimen/padding">-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:gravity="center"-->
+        <!--                android:orientation="vertical">-->
+
+        <!--                &lt;!&ndash;感情を撮影画像から取得し、最適な楽曲を提案するコンテンツです&ndash;&gt;-->
+        <!--                <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--                    android:id="@+id/recommendMusicForAi"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/cardview_height"-->
+        <!--                    android:clickable="true"-->
+        <!--                    android:elevation="@dimen/cardview_z"-->
+        <!--                    card_view:cardCornerRadius="@dimen/cardview_radius">-->
+
+
+        <!--                </androidx.cardview.widget.CardView>-->
+
+        <!--            </LinearLayout>-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:orientation="vertical">-->
+
+        <!--                &lt;!&ndash;感情を撮影画像から取得し、最適な楽曲を提案するコンテンツです&ndash;&gt;-->
+        <!--                <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/cardview_height"-->
+        <!--                    android:background="@color/white"-->
+        <!--                    android:clickable="true"-->
+        <!--                    android:elevation="@dimen/cardview_z"-->
+        <!--                    android:foreground="?android:attr/selectableItemBackground"-->
+        <!--                    card_view:cardCornerRadius="@dimen/cardview_radius">-->
+
+        <!--                </androidx.cardview.widget.CardView>-->
+
+        <!--            </LinearLayout>-->
+
+        <!--        </LinearLayout>-->
+
+
+        <!--メインコンテンツ-->
+        <!--        <ScrollView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent">-->
+
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:orientation="vertical"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:paddingLeft="@dimen/padding"-->
+        <!--                android:paddingRight="@dimen/padding">-->
+
+        <!--                &lt;!&ndash;感情を撮影画像から取得し、最適な楽曲を提案するコンテンツです&ndash;&gt;-->
+        <!--                <androidx.cardview.widget.CardView-->
+        <!--                    android:id="@+id/recommendMusicForAi"-->
+        <!--                    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/cardview_height"-->
+        <!--                    android:background="@color/white"-->
+        <!--                    android:elevation="@dimen/cardview_z"-->
+        <!--                    card_view:cardCornerRadius="@dimen/cardview_radius"-->
+        <!--                    android:clickable="true"-->
+        <!--                    android:foreground="?android:attr/selectableItemBackground">-->
+
+        <!--                    <LinearLayout-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:orientation="vertical"-->
+        <!--                        android:padding="10dp">-->
+
+        <!--                    </LinearLayout>-->
+
+
+        <!--                </androidx.cardview.widget.CardView>-->
+
+        <!--                <androidx.cardview.widget.CardView-->
+        <!--                    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/cardview_height"-->
+        <!--                    android:background="@color/white"-->
+        <!--                    android:elevation="@dimen/cardview_z"-->
+        <!--                    android:layout_marginTop="@dimen/padding"-->
+        <!--                    card_view:cardCornerRadius="@dimen/cardview_radius">-->
+        <!--                </androidx.cardview.widget.CardView>-->
+
+        <!--                <androidx.cardview.widget.CardView-->
+        <!--                    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/cardview_height"-->
+        <!--                    android:background="@color/white"-->
+        <!--                    android:elevation="@dimen/cardview_z"-->
+        <!--                    android:layout_marginTop="@dimen/padding"-->
+        <!--                    card_view:cardCornerRadius="@dimen/cardview_radius">-->
+        <!--                </androidx.cardview.widget.CardView>-->
+
+        <!--                <androidx.cardview.widget.CardView-->
+        <!--                    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="@dimen/cardview_height"-->
+        <!--                    android:background="@color/white"-->
+        <!--                    android:elevation="@dimen/cardview_z"-->
+        <!--                    android:layout_marginBottom="@dimen/padding"-->
+        <!--                    android:layout_marginTop="@dimen/padding"-->
+        <!--                    card_view:cardCornerRadius="@dimen/cardview_radius">-->
+        <!--                </androidx.cardview.widget.CardView>-->
+
+        <!--            </LinearLayout>-->
+
+        <!--        </ScrollView>-->
 
 
     </LinearLayout>
-
 
 
 </LinearLayout>

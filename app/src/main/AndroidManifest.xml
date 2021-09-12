@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:Android="http://schemas.android.com/apk/distribution"
     package="com.example.facemusic">
     <!-- カメラの権限を許可します -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- インターネットに接続する許可をします -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- ネットワークの進捗状況を確認するための許可をします -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- インターネットに接続する許可をします -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- ネットワークの進捗状況を確認するための許可をします -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="Android.permission.ACCESS_WIFI_STATE" />
 
+
     <application
+        android:name=".application.MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/facemusic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".PlayMusicActivity"></activity>
-        <activity android:name=".ShowMusicActivity" />
-        <activity android:name=".ShowResultForFaceApiActivity" />
-        <activity android:name=".CameraActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <activity android:name=".activity.PlayMusicActivity" />
+        <activity android:name=".activity.ShowResultForEmotionDetection" />
+        <activity android:name=".activity.ShowResultForAgeDetection" />
+        <activity android:name=".activity.ShowMusicActivity" />
+        <activity android:name=".activity.CameraActivity" />
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.OpeningActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

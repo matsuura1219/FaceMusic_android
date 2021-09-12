@@ -12,7 +12,7 @@
                 android:bottomLeftRadius="@dimen/button_radius"
                 android:topLeftRadius="@dimen/button_radius" />
             <solid
-                android:color="@color/button_material_light" />
+                android:color="@color/secondary" />
         </shape>
     </item>
 </selector>

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraActivity"
     android:background="@color/primary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activity.CameraActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,238 +21,221 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/titlebar_height"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/padding">
+                android:background="@color/secondary"
+                android:orientation="horizontal">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <!--タイトルバーの文字--><TextView
+                    <!--タイトルバーの文字-->
+                    <TextView
+                        android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/titlebar_height"
-                        android:textAlignment="center"
                         android:gravity="center"
-                        android:textColor="@color/black"
                         android:text="@string/title_camera_activity"
-                        android:textSize="@dimen/titlebar_font_size"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/titlebar_font_size" />
 
                     <!--戻る矢印-->
                     <ImageView
                         android:id="@+id/back"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:padding="6dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/arrows_v3"/>
+                        android:padding="6dp"
+                        android:src="@drawable/arrows" />
 
                 </FrameLayout>
 
             </LinearLayout>
 
+            <!-- メインコンテンツ -->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:paddingLeft="@dimen/padding"
                 android:paddingRight="@dimen/padding">
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <!--STEP01-->
+
+                    <!-- 1STEP -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/shape_rounded_corners"
+                            android:text="@string/step1"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="0.8"
-                            android:gravity="center">
+                            android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/selfie_v2"/>
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/noimage" />
 
+
+                            <LinearLayout
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="8dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="@string/step1_title"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/step1_explanation"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
                         </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 2STEP -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/shape_rounded_corners"
+                            android:text="@string/step2"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="0.3">
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/noimage" />
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="300dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/step1"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:background="@drawable/text_rounded_corners"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="20dp"/>
+                                android:orientation="vertical"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="8dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step1_title"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:paddingTop="16dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"/>
+                                <TextView
+                                    android:id="@+id/step2_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="@string/step2_title_emotion_detection"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step1_explanation"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:paddingTop="16dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"/>
+                                <TextView
+                                    android:id="@+id/step2_message"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/step2_explanation_emotion_detection"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
 
+                            </LinearLayout>
                         </LinearLayout>
 
 
                     </LinearLayout>
 
-
-                    <!--STEP03-->
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="32dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="0.8"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/ai_v2"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="0.3">
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step2"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:background="@drawable/text_rounded_corners"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="20dp"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step2_title"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:paddingTop="16dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step2_explanation"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:paddingTop="16dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <!--step03-->
+                    <!-- 1STEP -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_marginTop="32dp">
 
+                        <Button
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/shape_rounded_corners"
+                            android:text="@string/step3"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="0.8"
-                            android:gravity="center">
+                            android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/music_v2"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="0.3">
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/noimage" />
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="300dp"
                                 android:layout_height="wrap_content"
-                                android:text="@string/step3"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:background="@drawable/text_rounded_corners"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="20dp"
-                                android:paddingRight="20dp"/>
+                                android:orientation="vertical"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="8dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step3_title"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:paddingTop="16dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="@string/step3_title"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/step3_explanation"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:paddingTop="16dp"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/step3_explanation"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
 
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -260,32 +243,35 @@
 
                 </LinearLayout>
 
+
             </ScrollView>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center|bottom"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/padding"
                 android:paddingRight="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
-                android:orientation="vertical"
-                android:gravity="center|bottom">
+                android:paddingBottom="@dimen/padding">
 
                 <!--カメラを起動するボタン-->
                 <Button
                     android:id="@+id/next"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="NEXT"
-                    android:textSize="@dimen/button_text_size"
                     android:background="@drawable/shape_rounded_corners"
-                    android:foreground="?android:selectableItemBackground"/>
+                    android:text="@string/next"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
+        <!-- インジケータ -->
 
         <LinearLayout
             android:id="@+id/overlay"
@@ -305,7 +291,6 @@
         </LinearLayout>
 
     </FrameLayout>
-
 
 
 </LinearLayout>

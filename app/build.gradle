@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.facemusic"
-        minSdkVersion 22
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -33,20 +46,35 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    //cardViewのライブラリをダウンロードする
+    // cardViewのライブラリをダウンロードする
     implementation "androidx.cardview:cardview:1.0.0"
-    //microsoftのFaceAPIのSDKをダウンロードする（REST APIを使用するため必要ない）
+    // microsoftのFaceAPIのSDKをダウンロードする（REST APIを使用するため必要ない）
     //implementation 'com.microsoft.projectoxford:face:1.4.3'
-    //http通信用のライブラリをダウンロードする
+    // http通信用のライブラリをダウンロードする
     implementation("com.squareup.okhttp3:okhttp:4.3.1")
-    //AWSのS3操作のためのライブラリをダウンロードする
+    // AWSのS3操作のためのライブラリをダウンロードする
     implementation 'com.amazonaws:aws-android-sdk-s3:2.22.2'
     implementation 'com.amazonaws:aws-android-sdk-core:2.22.2'
-    //非同期処理のコルーチンを可能にするライブラリをダウンロードする
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
+    // 非同期処理のコルーチンを可能にするライブラリをダウンロードする
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
-    //グラフ系ライブラリをダウンロードする
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    // グラフ系ライブラリをダウンロードする
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    // spotify-SDK
+    implementation project(':spotify-app-remote')
+    implementation "com.google.code.gson:gson:2.8.6"
+    implementation 'com.spotify.android:auth:1.1.0'
+    // ViewModel
+    // noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    // LiveData
+    // noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    // jsonライブラリ
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    // Snackbar
+    implementation 'com.google.android.material:material:1.2.1'
 
 }
