@@ -180,6 +180,7 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener,
             // 巻き戻しボタンを押下した場合
             SpotifyApiClient.getInstance().changeMusicPosition(TEN_SECOND * (-1))
             // タイマーを止めます
+            positionBeforeDrag = seekBar.progress
             stopSeekBarPosition()
             // 曲の再生位置を取得します
             SpotifyApiClient.getInstance().getCurrentMusicPosition(this)
@@ -188,6 +189,7 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener,
             // 早送りボタンを押下した場合
             SpotifyApiClient.getInstance().changeMusicPosition(TEN_SECOND)
             // タイマーを止めます
+            positionBeforeDrag = seekBar.progress
             stopSeekBarPosition()
             // 曲の再生位置を取得します
             SpotifyApiClient.getInstance().getCurrentMusicPosition(this)

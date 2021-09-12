@@ -47,5 +47,11 @@ class Constants {
         // ListViewからの遷移時に渡すキー
         val LISTVIEW_CLICK: String = "LISTVIEW_CLICK"
 
+        // WebApiの検索件数
+        val DB_SEARCH_COUNT: Int = 20
+
+        // エラーが発生したときに表示する年齢
+        val STANDARD_AGE: Int = 20
+
     }
 }

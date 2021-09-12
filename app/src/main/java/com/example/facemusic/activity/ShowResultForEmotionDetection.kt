@@ -9,7 +9,8 @@ import android.view.animation.DecelerateInterpolator
 import com.example.facemusic.R
 import com.example.facemusic.`interface`.EC2ServerListener
 import com.example.facemusic.application.MainApplication
-import com.example.facemusic.json.EmotionsApiData
+import com.example.facemusic.const.Constants
+import com.example.facemusic.json.FaceMusicApiData
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.service.EC2Client
 import com.example.facemusic.util.DialogUtil
@@ -31,14 +32,14 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
 
     /** 定数 **/
 
-    //進捗バーのアニメーションの時間
+    // 進捗バーのアニメーションの時間
     private val ANIMATION_TIME: Long = 1000
-
     // プロパティ名
     private var PROPERTY_NAME = "progress"
 
     /** 変数 **/
 
+    // 感情の値
     private var angerData: Float = 0.0f
     private var contemptData: Float = 0.0f
     private var disgustData: Float = 0.0f
@@ -47,6 +48,7 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
     private var neutralData: Float = 0.0f
     private var sadnessData: Float = 0.0f
     private var surpriseData: Float = 0.0f
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,7 +156,7 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
                 overlay.visibility = View.VISIBLE
 
                 // EC2インスタンスEmotionsAPIを呼び出します
-                EC2Client.getInstance().getMusicForEmtion(angerData, contemptData, disgustData, fearData, happinessData, neutralData, sadnessData, surpriseData, 0, 10,this)
+                EC2Client.getInstance().getMusicForEmtion(angerData, contemptData, disgustData, fearData, happinessData, neutralData, sadnessData, surpriseData, 0, Constants.DB_SEARCH_COUNT,this)
             }
         }
     }
@@ -167,7 +169,7 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
 
         // jsonデータをパースします
         val mapper = jacksonObjectMapper()
-        val jsonData = mapper.readValue<ArrayList<EmotionsApiData>>(data!!)
+        val jsonData = mapper.readValue<ArrayList<FaceMusicApiData>>(data!!)
 
         // 共通領域に値を設定します
 
@@ -203,7 +205,7 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
     /** dataクラスの配列をViewmodelの配列に変換する関数です
      * @param lists ArrayList<EmotionsApiData> APIで取得したデータの配列
      */
-    private fun listToViewModel (lists: ArrayList<EmotionsApiData>): ArrayList<MusicViewModel> {
+    private fun listToViewModel (lists: ArrayList<FaceMusicApiData>): ArrayList<MusicViewModel> {
 
         var viewModels: ArrayList<MusicViewModel> = ArrayList(lists.size)
 

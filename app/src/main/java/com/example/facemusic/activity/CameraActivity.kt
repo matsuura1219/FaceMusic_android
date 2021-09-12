@@ -135,7 +135,7 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
     /**
      * 撮影を開始するメソッドです
-     * */
+     */
     private fun takePicture() {
 
         // 暗黙的インテントを使用します
@@ -146,11 +146,12 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         startActivityForResult(intent, CAMERA_REQUEST_CODE)
     }
 
+
     /** カメラ撮影後に実行されるコールバック関数です
      * @param requestCode Int リクエストコード
      * @param resultCode Int 結果のステータスコード
      * @param data Intent? 撮影後のデータ
-     * */
+     */
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -158,7 +159,7 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             //　リクエストコードがtakePicture()で設定したリクエストコード かつ 撮影が正常に終了したとき
 
-            //オーバーレイ表示をします
+            // オーバーレイ表示をします
             overlay.visibility = View.VISIBLE
 
             //撮影した画像をBitmap形式で保存します
@@ -280,8 +281,8 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         if (statusCode.equals(Constants.STATUS_CODE_NORMAL) && message.equals(Constants.SUCCESS_FACE_API)) {
 
             // 正常にレスポンスデータが返却された場合
-            //アップロードした画像を削除します
-            S3Client.getInstance().deleteObject(fileName)
+            // アップロードした画像を削除します
+            //S3Client.getInstance().deleteObject(fileName)
 
             // jsonデータをパースします
             val mapper = jacksonObjectMapper()
@@ -351,7 +352,6 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
                     //画面遷移を行います
                     val intent = Intent(this@CameraActivity, ShowResultForAgeDetection::class.java)
                     startActivity(intent)
-
 
                 }
 

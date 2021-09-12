@@ -9,7 +9,8 @@ import android.widget.NumberPicker
 import com.example.facemusic.R
 import com.example.facemusic.`interface`.EC2ServerListener
 import com.example.facemusic.application.MainApplication
-import com.example.facemusic.json.EmotionsApiData
+import com.example.facemusic.const.Constants
+import com.example.facemusic.json.FaceMusicApiData
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.service.EC2Client
 import com.example.facemusic.util.CommonUtil
@@ -36,7 +37,7 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
     private val STANDARD_AGE = 25
 
     /** 変数 **/
-    private var selectedAge: Int = 20
+    private var selectedAge: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,11 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
 
         // 初期化を行います
         init()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
     }
 
@@ -75,6 +81,8 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
 
     /** 初期化を行う関数です **/
     private fun init () {
+
+        selectedAge = MainApplication.getInstance().getUserInfo().getFaceApiData()?.faceAttributes?.age?.toInt() ?: Constants.STANDARD_AGE
 
         // リスナーを設定します
         back.setOnClickListener(this)
@@ -113,7 +121,7 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
 
             }
 
-            EC2Client.getInstance().getMusicForAge(age, 10, 20,this)
+            EC2Client.getInstance().getMusicForAge(age, 0, Constants.DB_SEARCH_COUNT,this)
 
 
         } else if (v.id == R.id.checkbox) {
@@ -148,7 +156,7 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
 
         // jsonデータをパースします
         val mapper = jacksonObjectMapper()
-        val jsonData = mapper.readValue<ArrayList<EmotionsApiData>>(data!!)
+        val jsonData = mapper.readValue<ArrayList<FaceMusicApiData>>(data!!)
 
         // 共通領域に値を設定します
 
@@ -180,7 +188,7 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
     /** dataクラスの配列をViewmodelの配列に変換する関数です
      * @param lists ArrayList<EmotionsApiData> APIで取得したデータの配列
      */
-    private fun listToViewModel (lists: ArrayList<EmotionsApiData>): ArrayList<MusicViewModel> {
+    private fun listToViewModel (lists: ArrayList<FaceMusicApiData>): ArrayList<MusicViewModel> {
 
         var viewModels: ArrayList<MusicViewModel> = ArrayList(lists.size)
 
@@ -199,6 +207,8 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
             viewModel.speechiness = list.speechiness
             viewModel.tempo = list.tempo
             viewModel.valence = list.valence
+            viewModel.durationTime = list.durationTime
+            viewModel.releaseDay = list.releaseDay
 
             viewModels.add(viewModel)
 

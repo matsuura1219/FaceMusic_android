@@ -49,6 +49,8 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
     private var listItems: ArrayList<MusicViewModel> = ArrayList<MusicViewModel>()
     // APIをコール中かを判定するフラグ
     private var isCallingAPi: Boolean = false
+    // WebApiコール時のDB検索位置
+    private var dbSearchPosition: Int = Constants.DB_SEARCH_COUNT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +135,7 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
                 dialog.visibility = View.VISIBLE
 
                 // APIをコールします
-                EC2Client.getInstance().getMusicForEmtion(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0, 10,this)
+                EC2Client.getInstance().getMusicForEmtion(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, dbSearchPosition, dbSearchPosition + Constants.DB_SEARCH_COUNT,this)
 
                 // フラグを設定します
                 isCallingAPi = true
