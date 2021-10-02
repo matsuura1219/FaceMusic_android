@@ -16,6 +16,8 @@ import com.example.facemusic.service.EC2Client
 import com.example.facemusic.util.DialogUtil
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.android.synthetic.main.activity_camera.*
+import kotlinx.android.synthetic.main.activity_show_result_for_age.*
 import kotlinx.android.synthetic.main.activity_show_result_for_face_api.*
 import kotlinx.android.synthetic.main.activity_show_result_for_face_api.back
 import kotlinx.android.synthetic.main.activity_show_result_for_face_api.next
@@ -138,6 +140,18 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
 
     }
 
+    /** 戻るボタン / 次へボタンのタッチイベントを許可する関数です
+     * @param isEnable Boolean 許可する場合、true / 許可しない場合、false
+     */
+
+    private fun isEnableToTouch (isEnable: Boolean) {
+
+        back.isEnabled = isEnable
+        next.isEnabled = isEnable
+
+    }
+
+
     /** クリックイベント後に実行されるコールバック関数です
      * @param p0 View? フォーカスが当たっているViewコンポーネント
      */
@@ -154,6 +168,9 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
 
                 // オーバーレイを表示します
                 overlay.visibility = View.VISIBLE
+
+                // タッチイベントを禁止します
+                isEnableToTouch(false)
 
                 // EC2インスタンスEmotionsAPIを呼び出します
                 EC2Client.getInstance().getMusicForEmtion(angerData, contemptData, disgustData, fearData, happinessData, neutralData, sadnessData, surpriseData, 0, Constants.DB_SEARCH_COUNT,this)
@@ -184,6 +201,9 @@ class ShowResultForEmotionDetection: Activity(), View.OnClickListener, EC2Server
 
             // オーバーレイを解除します
             overlay.visibility = View.INVISIBLE
+
+            // タッチイベントを許可します
+            isEnableToTouch(true)
 
             // 画面遷移を行います
             val intent = Intent(this@ShowResultForEmotionDetection, ShowMusicActivity::class.java)

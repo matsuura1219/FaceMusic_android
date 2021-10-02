@@ -7,7 +7,11 @@
         <!-- ステータスバーの色に適用される属性はcolorPrimaryDarkのためここを表示したい色に変更します -->
         <item name="colorPrimaryDark">@color/secondary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- ナビゲーションバー（戻るキー・ホームキーなどがあるバー）の背景色 -->
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
+
+
 
     <!-- チェックボックスのスタイル -->
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">

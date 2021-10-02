@@ -160,7 +160,7 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
 
         coroutine.launch {
 
-            for (i in 0..listItems.size) {
+            for (i in 0 until listItems.size) {
 
                 // ListViewのカラムを追加します
                 adapter!!.add(listItems[i])

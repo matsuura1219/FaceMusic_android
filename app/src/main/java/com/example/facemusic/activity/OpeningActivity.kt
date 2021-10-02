@@ -5,14 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.view.animation.AlphaAnimation
 import com.example.facemusic.R
 import com.example.facemusic.`interface`.SpotifyAuthListener
 import com.example.facemusic.const.Constants
 import com.example.facemusic.util.DialogUtil
 import com.example.facemusic.service.SpotifyApiClient
+import kotlinx.android.synthetic.main.activity_camera.*
 //Kotlin Android Extensionsにより、xmlのコンポーネントの初期化をする必要なく、IDを変数として扱うことができます
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /** オープニング画面です **/
 
@@ -21,8 +26,10 @@ class OpeningActivity : Activity(), SpotifyAuthListener {
     /** 定数 **/
     //ハンドラー（UI処理をサブスレッドで実行するためのクラスです）
     private val mHandler = Handler(Looper.getMainLooper())
+
     //起動からロゴのフェードインにかかる時間
     private val fadeInAnimationTime: Long = 1000
+
     //起動から画面遷移にかかる時間
     private val ANIMATION_TIME: Long = 2000
 
@@ -37,7 +44,7 @@ class OpeningActivity : Activity(), SpotifyAuthListener {
     }
 
     /** アニメーションを実行する関数です **/
-    private fun doAnimation () {
+    private fun doAnimation() {
         //imageViewのアルファ―値を0.0fから1.0fへ変化させるフェードインアニメーション
         val fadeAnim = AlphaAnimation(0.0f, 1.0f)
         //フェードインにかかる時間を設定
@@ -55,7 +62,7 @@ class OpeningActivity : Activity(), SpotifyAuthListener {
     }
 
     /** アプリ起動時のアニメーションを実行する関数です **/
-    private fun showOpening () {
+    private fun showOpening() {
 
         mHandler.postDelayed(Runnable {
 
@@ -83,17 +90,36 @@ class OpeningActivity : Activity(), SpotifyAuthListener {
 
             if (resultCode.equals(Constants.COULD_NOT_FIND_APP)) {
 
-                // アプリが未インストールの場合
-                DialogUtil.getInstance().showMessageToGooglePlay(getString(R.string.spotify_uninstalled), getString(
-                    R.string.yes
-                ), this)
+                // メインスレッドで描画処理を行います
+                val coroutine = CoroutineScope(Dispatchers.Main)
 
-            } else if (resultCode.equals((Constants.AUTHENTICATION_FAILED))){
+                coroutine.launch {
+
+                    // アプリが未インストールの場合
+                    DialogUtil.getInstance().showMessageToGooglePlay(
+                        getString(R.string.spotify_uninstalled), getString(
+                            R.string.yes
+                        ), this@OpeningActivity
+                    )
+                }
+
+
+            } else if (resultCode.equals((Constants.AUTHENTICATION_FAILED))) {
 
                 // その他の認証エラーが発生したした場合
-                DialogUtil.getInstance().showCloseMessage(getString(R.string.spotify_onfailure), getString(
-                    R.string.yes
-                ), this)
+
+                // メインスレッドで描画処理を行います
+                val coroutine = CoroutineScope(Dispatchers.Main)
+
+                coroutine.launch {
+
+                    DialogUtil.getInstance().showCloseMessage(
+                        getString(R.string.spotify_onfailure), getString(
+                            R.string.yes
+                        ), this@OpeningActivity
+                    )
+                }
+
 
             }
 

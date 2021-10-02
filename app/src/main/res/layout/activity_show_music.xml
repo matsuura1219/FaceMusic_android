@@ -60,7 +60,6 @@
                 android:paddingLeft="@dimen/padding"
                 android:paddingRight="@dimen/padding">
 
-
                 <ListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"

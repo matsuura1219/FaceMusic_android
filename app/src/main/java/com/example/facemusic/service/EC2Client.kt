@@ -32,6 +32,7 @@ class EC2Client {
      * @param anger Float 怒り
      * @param contempt Float 軽蔑
      * @param disgust Float 嫌悪
+     *
      * @param fear Float 恐怖
      * @param happiness FLoat 幸福
      * @param neutral Float 自然
