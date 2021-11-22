@@ -270,6 +270,10 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         } else {
 
             // S3へ画像アップロードに失敗した場合
+
+            // ボタンを活性状態にします
+            isEnableToTouch(true)
+
             // ポップアップを表示させます。
             val coroutine = CoroutineScope(Dispatchers.Main)
             coroutine.launch {
@@ -313,6 +317,10 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
                     // オーバーレイを解除します
                     overlay.visibility = View.INVISIBLE
+
+                    // ボタンを活性状態にします
+                    isEnableToTouch(true)
+
                     // ポップアップ画面を表示します
                     DialogUtil.getInstance().showErrorMessage(resources.getString(R.string.faceapi_non_people), resources.getString(R.string.yes), this@CameraActivity)
                 }
@@ -331,6 +339,10 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
                     // オーバーレイを解除します
                     overlay.visibility = View.INVISIBLE
+
+                    // ボタンを活性状態にします
+                    isEnableToTouch(true)
+
                     // ポップアップ画面を表示します
                     DialogUtil.getInstance().showErrorMessage(resources.getString(R.string.faceapi_many_people), resources.getString(R.string.yes), this@CameraActivity)
                 }

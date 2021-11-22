@@ -44,7 +44,6 @@ class MainApplication: Application() {
         return userInfo
     }
 
-
     public fun setMusicViewModel (model: ArrayList<MusicViewModel>) {
         this.musicViewModel = model
     }

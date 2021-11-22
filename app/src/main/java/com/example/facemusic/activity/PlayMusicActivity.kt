@@ -211,6 +211,7 @@ class PlayMusicActivity : Activity(), SeekBar.OnSeekBarChangeListener,
         } else {
             // 戻るボタンを押下した場合
             val listPosition = MainApplication.getInstance().getUserInfo().getSelectedPosition()
+
             model = MainApplication.getInstance().getMusicViewModel()[listPosition - 1]
             MainApplication.getInstance().getUserInfo().setSelectedPosition(listPosition - 1)
         }
