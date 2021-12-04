@@ -17,6 +17,7 @@ import com.example.facemusic.util.CommonUtil
 import com.example.facemusic.util.DialogUtil
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.android.synthetic.main.activity_camera.*
 import kotlinx.android.synthetic.main.activity_show_result_for_age.*
 import kotlinx.android.synthetic.main.activity_show_result_for_age.back
 import kotlinx.android.synthetic.main.activity_show_result_for_age.next
@@ -57,6 +58,7 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
     }
 
 
+
     /** Viewの初期化を行う関数です **/
     private fun initComponents () {
 
@@ -91,6 +93,17 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
         checkbox.setOnClickListener(this)
     }
 
+    /** 戻るボタン / 次へボタンのタッチイベントを許可する関数です
+     * @param isEnable Boolean 許可する場合、true / 許可しない場合、false
+     */
+
+    private fun isEnableToTouch (isEnable: Boolean) {
+
+        back.isEnabled = isEnable
+        next.isEnabled = isEnable
+
+    }
+
 
 
     /** ボタンクリック時に実行されるコールバック関数です **/
@@ -104,6 +117,9 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
 
             // オーバーレイを表示します
             overlay.visibility = View.VISIBLE
+
+            // タッチイベントを禁止します
+            isEnableToTouch(false)
 
             // WebAPIをコールします
 
@@ -171,6 +187,9 @@ class ShowResultForAgeDetection : Activity(), View.OnClickListener, NumberPicker
 
             // オーバーレイを解除します
             overlay.visibility = View.INVISIBLE
+
+            // タッチイベントを許可します
+            isEnableToTouch(true)
 
             // 画面遷移を行います
             val intent = Intent(this@ShowResultForAgeDetection, ShowMusicActivity::class.java)

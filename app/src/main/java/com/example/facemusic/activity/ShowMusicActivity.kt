@@ -19,8 +19,11 @@ import com.example.facemusic.application.MainApplication
 import com.example.facemusic.const.Constants
 import com.example.facemusic.data.MusicListItem
 import com.example.facemusic.data.UserInfo
+import com.example.facemusic.json.FaceMusicApiData
 import com.example.facemusic.model.MusicViewModel
 import com.example.facemusic.service.EC2Client
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_show_music.*
 import kotlinx.android.synthetic.main.activity_show_music.back
@@ -134,8 +137,31 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
                 // ダイアログを表示させます
                 dialog.visibility = View.VISIBLE
 
-                // APIをコールします
-                EC2Client.getInstance().getMusicForEmtion(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, dbSearchPosition, dbSearchPosition + Constants.DB_SEARCH_COUNT,this)
+                if (MainApplication.getInstance().getUserInfo().getSelectContent().equals(Constants.EMOTION_DETECTION)) {
+
+                    var emotion = MainApplication.getInstance().getUserInfo().getFaceApiData()!!.faceAttributes.emotion
+                    // APIをコールします
+                    EC2Client.getInstance().getMusicForEmtion(
+                        emotion.anger.toFloat() * 100,
+                        emotion.contempt.toFloat() * 100,
+                        emotion.disgust.toFloat() * 100,
+                        emotion.fear.toFloat() * 100,
+                        emotion.happiness.toFloat() * 100,
+                        emotion.neutral.toFloat() * 100,
+                        emotion.sadness.toFloat() * 100,
+                        emotion.surprise.toFloat() * 100,
+                        dbSearchPosition,
+                        dbSearchPosition + Constants.DB_SEARCH_COUNT,this)
+
+                } else {
+
+                    var age = MainApplication.getInstance().getUserInfo().getFaceApiData()!!.faceAttributes.age.toInt().toString()
+                    EC2Client.getInstance().getMusicForAge(age, dbSearchPosition, dbSearchPosition + Constants.DB_SEARCH_COUNT,this)
+
+                }
+
+
+                dbSearchPosition += Constants.DB_SEARCH_COUNT
 
                 // フラグを設定します
                 isCallingAPi = true
@@ -155,20 +181,27 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
      */
     override fun onSuccess(data: String?) {
 
+        // jsonデータをパースします
+        val mapper = jacksonObjectMapper()
+        val jsonData = mapper.readValue<ArrayList<FaceMusicApiData>>(data!!)
+
+        // 共通領域に値を設定します
+        val model = listToViewModel(jsonData)
+
         //メインスレッドで描画処理を行います
         val coroutine = CoroutineScope(Dispatchers.Main)
 
         coroutine.launch {
 
-            for (i in 0..listItems.size) {
+            for (i in 0 until model.size) {
 
                 // ListViewのカラムを追加します
-                adapter!!.add(listItems[i])
+                adapter!!.add(model[i])
 
             }
 
             // 共通領域を更新します
-            MainApplication.getInstance().addMusicViewModel(listItems)
+            MainApplication.getInstance().addMusicViewModel(model)
 
             // listViewを更新します
             adapter!!.notifyDataSetChanged()
@@ -181,6 +214,38 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
 
         }
 
+    }
+
+    /** dataクラスの配列をViewmodelの配列に変換する関数です
+     * @param lists ArrayList<EmotionsApiData> APIで取得したデータの配列
+     */
+    private fun listToViewModel (lists: ArrayList<FaceMusicApiData>): ArrayList<MusicViewModel> {
+
+        var viewModels: ArrayList<MusicViewModel> = ArrayList(lists.size)
+
+        for (list in lists) {
+
+            var viewModel = MusicViewModel()
+            viewModel.id = list.id
+            viewModel.imageUrl = list.imageUrl
+            viewModel.artist = list.artist
+            viewModel.music = list.music
+            viewModel.acousticness = list.acousticness
+            viewModel.danceability = list.danceability
+            viewModel.energy = list.energy
+            viewModel.instrumentalness = list.instrumentalness
+            viewModel.liveness = list.liveness
+            viewModel.speechiness = list.speechiness
+            viewModel.tempo = list.tempo
+            viewModel.valence = list.valence
+            viewModel.durationTime = list.durationTime
+            viewModel.releaseDay = list.releaseDay
+
+            viewModels.add(viewModel)
+
+        }
+
+        return viewModels
     }
 
     /** EC2インスタンスとの通信に失敗した場合に実行されるコールバック関数です **/
@@ -204,7 +269,6 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
 
         }
 
-
     }
 
     override fun onClick(p0: View) {
@@ -221,5 +285,6 @@ class ShowMusicActivity : Activity(), AdapterView.OnItemClickListener,
             finish()
         }
     }
+
 
 }

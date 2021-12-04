@@ -81,6 +81,17 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
     }
 
+    /** 戻るボタン / 次へボタンのタッチイベントを許可する関数です
+     * @param isEnable Boolean 許可する場合、true / 許可しない場合、false
+     */
+
+    private fun isEnableToTouch (isEnable: Boolean) {
+
+        back.isEnabled = isEnable
+        next.isEnabled = isEnable
+
+    }
+
     /** パーミッションの有無を確認するための関数です **/
 
     private fun checkCameraPermission() {
@@ -161,6 +172,9 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
             // オーバーレイ表示をします
             overlay.visibility = View.VISIBLE
+
+            // タッチイベントを禁止します
+            isEnableToTouch(false)
 
             //撮影した画像をBitmap形式で保存します
             val bitmap = data?.extras?.get("data").let {
@@ -256,6 +270,10 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         } else {
 
             // S3へ画像アップロードに失敗した場合
+
+            // ボタンを活性状態にします
+            isEnableToTouch(true)
+
             // ポップアップを表示させます。
             val coroutine = CoroutineScope(Dispatchers.Main)
             coroutine.launch {
@@ -278,11 +296,11 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
     override fun onSuccess(statusCode: String, message: String, data: String?) {
 
-        if (statusCode.equals(Constants.STATUS_CODE_NORMAL) && message.equals(Constants.SUCCESS_FACE_API)) {
+        if (statusCode.equals(Constants.STATUS_CODE_NORMAL)) {
 
             // 正常にレスポンスデータが返却された場合
             // アップロードした画像を削除します
-            //S3Client.getInstance().deleteObject(fileName)
+            S3Client.getInstance().deleteObject(fileName)
 
             // jsonデータをパースします
             val mapper = jacksonObjectMapper()
@@ -294,32 +312,41 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
                 // メインスレッドで描画処理を行います
                 val coroutine = CoroutineScope(Dispatchers.Main)
+
                 coroutine.launch {
 
                     // オーバーレイを解除します
                     overlay.visibility = View.INVISIBLE
 
-                    DialogUtil.getInstance().showErrorMessage(
-                        getString(R.string.faceapi_non_people),
-                        getString(R.string.yes),
-                        applicationContext
-                    )
+                    // ボタンを活性状態にします
+                    isEnableToTouch(true)
+
+                    // ポップアップ画面を表示します
+                    DialogUtil.getInstance().showErrorMessage(resources.getString(R.string.faceapi_non_people), resources.getString(R.string.yes), this@CameraActivity)
                 }
 
                 return
+
             }
 
             if (jsonData.size > 1) {
                 // 2名以上の顔画像が存在する場合
+
                 // メインスレッドで描画処理を行います
                 val coroutine = CoroutineScope(Dispatchers.Main)
+
                 coroutine.launch {
-                    DialogUtil.getInstance().showErrorMessage(
-                        getString(R.string.faceapi_many_people),
-                        getString(R.string.yes),
-                        applicationContext
-                    )
+
+                    // オーバーレイを解除します
+                    overlay.visibility = View.INVISIBLE
+
+                    // ボタンを活性状態にします
+                    isEnableToTouch(true)
+
+                    // ポップアップ画面を表示します
+                    DialogUtil.getInstance().showErrorMessage(resources.getString(R.string.faceapi_many_people), resources.getString(R.string.yes), this@CameraActivity)
                 }
+
                 return
             }
 
@@ -333,6 +360,9 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
 
                 // オーバーレイを解除します
                 overlay.visibility = View.INVISIBLE
+
+                // タッチイベントを許可します
+                isEnableToTouch(true)
 
                 if (MainApplication.getInstance().getUserInfo().getSelectContent()
                         .equals(Constants.EMOTION_DETECTION)
@@ -360,17 +390,18 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         } else {
 
             // FaceAPIのコールに失敗した場合
-
-            // ポップアップ画面を表示します
             // メインスレッドで描画処理を行います
             val coroutine = CoroutineScope(Dispatchers.Main)
+
             coroutine.launch {
-                DialogUtil.getInstance().showMessageToSettings(
-                    getString(R.string.faceapi_not_work), getString(
-                        R.string.yes
-                    ), applicationContext
-                )
+
+                // オーバーレイを解除します
+                overlay.visibility = View.INVISIBLE
+                // ポップアップ画面を表示します
+                DialogUtil.getInstance().showErrorMessage(resources.getString(R.string.faceapi_not_work), resources.getString(R.string.yes), this@CameraActivity)
             }
+
+            return
 
         }
 
@@ -384,6 +415,8 @@ class CameraActivity : Activity(), FaceApiListener, S3UpLoadObjectListener, View
         // メインスレッドで描画処理を行います
         val coroutine = CoroutineScope(Dispatchers.Main)
         coroutine.launch {
+
+            overlay.visibility = View.INVISIBLE
             DialogUtil.getInstance().showErrorMessage(
                 getString(R.string.not_connect_network), getString(
                     R.string.yes
